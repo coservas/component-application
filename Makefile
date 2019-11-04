@@ -10,7 +10,8 @@ DC := $(DOCKER_COMPOSE) -f $(DC_FILE)
 DC_EXEC := $(DC) exec
 
 .PHONY:
-	help status ps
+	help status ps logs
+	db db-root
 	build clean start stop restart
 	bash bash-fpm bash-db bash-nginx
 
@@ -49,10 +50,10 @@ bash-db: ##@console Exec bash on mariadb
 	@$(DC_EXEC) db bash
 
 bash-fpm: ##@console Exec bash on fpm
-	@$(DC_EXEC) fpm bash
+	@$(DC_EXEC) fpm sh
 
 bash-nginx: ##@console Exec bash on nginx
-	@$(DC_EXEC) nginx bash
+	@$(DC_EXEC) nginx sh
 ### shell ###
 
 
