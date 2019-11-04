@@ -19,7 +19,7 @@ DC_EXEC := $(DC) exec
 build: ## Build all or c=<name> services
 	@$(DC) build $(c)
 
-clean: ## Stop containers and removing containers, networks, volumes, and images
+clean: confirm ## Stop containers and removing containers, networks, volumes, and images
 	@$(DC) down
 ### data ###
 
