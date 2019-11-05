@@ -1,0 +1,18 @@
+{
+    "name": "coservas/login-register-form",
+    "type": "project",
+    "description": "Base login/register form",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "phpunit/phpunit": "^8.4",
+        "zendframework/zend-diactoros": "^2.1",
+        "zendframework/zend-httphandlerrunner": "^1.1"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    }
+}
