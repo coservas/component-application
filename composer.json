@@ -14,5 +14,8 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-master"
+    },
+    "scripts": {
+        "test": "phpunit --colors=always"
     }
 }
