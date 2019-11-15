@@ -9,9 +9,14 @@ use Zend\Diactoros\Response\HtmlResponse;
 
 class LoginAction implements RequestHandlerInterface
 {
-    public function __construct()
-    {
+    /**
+     * @var RequestHandlerInterface
+     */
+    private $action;
 
+    public function __construct(RequestHandlerInterface $action)
+    {
+        $this->action = $action;
     }
 
     /**
@@ -19,6 +24,7 @@ class LoginAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+//        return $this->action->handle($request);
         return new HtmlResponse('Login action!');
     }
 }

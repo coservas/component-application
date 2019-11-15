@@ -20,6 +20,7 @@
         }
     },
     "require": {
+        "league/container": "^3.3",
         "middlewares/aura-router": "^1.1",
         "middlewares/request-handler": "^1.4",
         "middlewares/response-time": "^1.1",
