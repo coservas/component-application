@@ -12,7 +12,7 @@ class NotFoundAction implements RequestHandlerInterface
     /**
      * @inheritdoc
      */
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request = null): ResponseInterface
     {
         return new HtmlResponse('Page not found.', 404);
     }
