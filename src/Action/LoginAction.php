@@ -1,22 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Action;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Twig\Environment;
 use Zend\Diactoros\Response\HtmlResponse;
 
 class LoginAction implements RequestHandlerInterface
 {
-    /**
-     * @var RequestHandlerInterface
-     */
-    private $action;
+    /* @var Environment */
+    private $templating;
 
-    public function __construct(RequestHandlerInterface $action)
+    public function __construct(Environment $templating)
     {
-        $this->action = $action;
+        $this->templating = $templating;
     }
 
     /**
@@ -24,7 +23,9 @@ class LoginAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-//        return $this->action->handle($request);
-        return new HtmlResponse('Login action!');
+        $html = $this->templating->render('main.html.twig');
+
+        return new HtmlResponse($html);
+//        return new HtmlResponse('Login action!');
     }
 }
