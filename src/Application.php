@@ -2,16 +2,11 @@
 
 namespace App;
 
-use App\Action\LoginAction;
 use App\Action\NotFoundAction;
 use Aura\Router\RouterContainer;
 
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-
-use Middlewares\AuraRouter;
-use Middlewares\ResponseTime;
-use Middlewares\RequestHandler;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -45,17 +40,14 @@ final class Application implements MiddlewarePipeInterface
         $this->setMiddleware();
 
         $this->addRoutes();
+        $this->addServices();
         $this->addMiddlewares();
     }
 
     /* @inheritDoc */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler = null): ResponseInterface
     {
-        if (null === $handler) {
-            $handler = $this->container->get(NotFoundAction::class);
-        }
-
-        return $this->pipeline->process($request, $handler);
+        return $this->pipeline->process($request, $handler ?? $this->container->get(NotFoundAction::class));
     }
 
     /* @inheritDoc */
@@ -72,29 +64,31 @@ final class Application implements MiddlewarePipeInterface
 
     private function addMiddlewares(): void
     {
-        $this->pipe($this->container->get(ResponseTime::class));
-        $this->pipe($this->container->get(AuraRouter::class));
-        $this->pipe($this->container->get(RequestHandler::class));
+        $middlewares = require 'config/middlewares.php';
+
+        foreach ($middlewares as $middleware) {
+            $this->pipe($this->container->get($middleware));
+        }
     }
 
     private function addRoutes(): void
     {
-        $routes = [
-            [
-                'methods' => [
-                    'get'
-                ],
-                'name' => 'login',
-                'path' => '/login',
-                'handler' => LoginAction::class
-            ],
-        ];
+        $routes = require 'config/routes.php';
 
         $map = $this->router->getMap();
         foreach ($routes as $route) {
             if (false !== array_search('get', $route['methods'])) {
                 $map->get($route['name'], $route['path'], $route['handler']);
             }
+        }
+    }
+
+    private function addServices()
+    {
+        $services = require 'config/services.php';
+
+        foreach ($services as $id => $concrete) {
+            $this->container->add($id, $concrete);
         }
     }
 
@@ -105,7 +99,6 @@ final class Application implements MiddlewarePipeInterface
             new ReflectionContainer
         );
 
-        $this->container->add(LoaderInterface::class, new FilesystemLoader('templates'));
         $this->container->add(RouterContainer::class, $this->router);
         $this->container->add(ContainerInterface::class, $this->container);
     }
