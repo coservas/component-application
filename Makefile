@@ -77,9 +77,9 @@ install: # Install project
 	@echo '| Installing, please wait ... |'
 	@make build $(QUIET)
 	@echo '| 1/3 ...                     |'
-	@$(DC_EXEC) fpm composer install $(QUIET)
-	@echo '| 2/3 ...                     |'
 	@make start $(QUIET)
+	@echo '| 2/3 ...                     |'
+	@$(DC_EXEC) fpm composer install $(QUIET)
 	@echo '| 3/3 ...                     |'
 	@echo '| Done.                       |'
 	@echo '-------------------------------'

@@ -1,3 +1,9 @@
+Installing
+```
+git clone project && cd project
+make install
+```
+
 Configurations:
 
 - PSR-7 - zendframework/zend-diactoros
