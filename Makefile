@@ -5,15 +5,17 @@ include .env
 -include .env.local
 export
 
-DC_FILE := $(DOCKER_COMPOSE_FILE)
+DC_FILE := docker/docker-compose.yml
 DC := $(DOCKER_COMPOSE) -f $(DC_FILE)
 DC_EXEC := $(DC) exec
+QUIET := > /dev/null 2>&1
 
 .PHONY:
 	help status ps logs
 	db db-root
 	build clean start stop restart
 	bash bash-fpm bash-db bash-nginx
+	install
 
 ### data ###
 build: ##@data Build all or c=<name> services
@@ -66,3 +68,22 @@ status: ##@info Show status of containers
 logs: ##@info Show all or c=<name> logs of containers
 	@$(DC) logs -f $(c)
 ### information ###
+
+
+### inactive ###
+install: # Install project
+	@echo -e '\n'
+	@echo '-------------------------------'
+	@echo '| Installing, please wait ... |'
+	@make build $(QUIET)
+	@echo '| 1/3 ...                     |'
+	@$(DC_EXEC) fpm composer install $(QUIET)
+	@echo '| 2/3 ...                     |'
+	@make start $(QUIET)
+	@echo '| 3/3 ...                     |'
+	@echo '| Done.                       |'
+	@echo '-------------------------------'
+	@echo 'Installation completed successfully!'
+	@echo 'Now you can start the project in the browser at 0.0.0.0:$(NGINX_PORT)'
+	@echo -e '\n'
+### inactive ###

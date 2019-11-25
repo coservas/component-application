@@ -7,14 +7,14 @@ services:
         ports:
             - ${NGINX_PORT}:80
         volumes:
-            - ./docker/nginx:/etc/nginx/conf.d
-            - ./public:/var/app/public
+            - ./nginx:/etc/nginx/conf.d
+            - ./../public:/var/app/public
 
     fpm:
-        build: ./docker/fpm
+        build: fpm
         restart: always
         volumes:
-            - .:/var/app
+            - ./..:/var/app
 
 #    db:
 #        image: mariadb:10.4
