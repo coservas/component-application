@@ -77,13 +77,13 @@ install: # Install project
 	@echo '| Installing, please wait ... |'
 	@make build $(QUIET)
 	@echo '| 1/3 ...                     |'
-	@make start $(QUIET)
+	@make restart $(QUIET)
 	@echo '| 2/3 ...                     |'
 	@$(DC_EXEC) fpm composer install $(QUIET)
 	@echo '| 3/3 ...                     |'
 	@echo '| Done.                       |'
 	@echo '-------------------------------'
 	@echo 'Installation completed successfully!'
-	@echo 'Now you can start the project in the browser at 0.0.0.0:$(NGINX_PORT)'
+	@echo 'Now you can start the project in browser at 0.0.0.0:$(NGINX_PORT)'
 	@echo -e '\n'
 ### inactive ###
