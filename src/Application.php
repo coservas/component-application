@@ -79,12 +79,16 @@ final class Application implements MiddlewarePipeInterface
 
         foreach ($services as $id => $concrete) {
             if (is_string($concrete)) {
-                $this->container->add($id, new $concrete());
+                $this->container->add($id, $concrete);
                 continue;
             }
 
             if (is_array($concrete)) {
-                $this->container->add($id, new $concrete['class'](...$concrete['args']));
+                if ($concrete['args']) {
+                    $this->container->add($id, $concrete['class'])->addArguments($concrete['args']);
+                } else {
+                    $this->container->add($id, $concrete['class']);
+                }
                 continue;
             }
 
