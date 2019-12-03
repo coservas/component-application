@@ -5,7 +5,9 @@ namespace App;
 use App\Action\NotFoundAction;
 use Aura\Router\RouterContainer;
 
+use http\Exception\InvalidArgumentException;
 use League\Container\Container;
+use League\Container\Exception\NotFoundException;
 use League\Container\ReflectionContainer;
 
 use Psr\Container\ContainerInterface;
@@ -15,24 +17,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-use Twig\Loader\FilesystemLoader;
-use Twig\Loader\LoaderInterface;
-
 use Zend\Stratigility\MiddlewarePipe;
 use Zend\Stratigility\MiddlewarePipeInterface;
 
 final class Application implements MiddlewarePipeInterface
 {
-    /* @var Container */
-    private $container;
+    private Container $container;
+    private MiddlewarePipe $pipeline;
+    private RouterContainer $router;
 
-    /* @var MiddlewarePipe */
-    private $pipeline;
-
-    /* @var RouterContainer */
-    private $router;
-
-    /* Application constructor. */
     public function __construct()
     {
         $this->setRouter();
@@ -44,22 +37,19 @@ final class Application implements MiddlewarePipeInterface
         $this->addMiddlewares();
     }
 
-    /* @inheritDoc */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler = null): ResponseInterface
     {
         return $this->pipeline->process($request, $handler ?? $this->container->get(NotFoundAction::class));
     }
 
-    /* @inheritDoc */
     public function pipe(MiddlewareInterface $middleware): void
     {
         $this->pipeline->pipe($middleware);
     }
 
-    /* @inheritDoc */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->pipeline->handle($request);
+        return $this->pipeline->handle($request);
     }
 
     private function addMiddlewares(): void
@@ -88,7 +78,17 @@ final class Application implements MiddlewarePipeInterface
         $services = require 'config/services.php';
 
         foreach ($services as $id => $concrete) {
-            $this->container->add($id, $concrete);
+            if (is_string($concrete)) {
+                $this->container->add($id, new $concrete());
+                continue;
+            }
+
+            if (is_array($concrete)) {
+                $this->container->add($id, new $concrete['class'](...$concrete['args']));
+                continue;
+            }
+
+            throw new \Exception('Non valid scheme.');
         }
     }
 

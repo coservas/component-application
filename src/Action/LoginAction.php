@@ -2,49 +2,38 @@
 
 namespace App\Action;
 
-use App\Service\FormAuthAdapter;
+use App\Service\Auth\AuthenticationService;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Twig\Environment;
-use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Session\ManagerInterface;
-use Zend\Session\SessionManager;
 
 class LoginAction implements RequestHandlerInterface
 {
-    /* @var ManagerInterface */
-    private $session;
+    private ManagerInterface $session;
+    private Environment $templating;
 
-    /* @var Environment */
-    private $templating;
+    private AuthenticationService $authService;
 
-    /**
-     * LoginAction constructor.
-     * @param Environment      $templating
-     * @param ManagerInterface $session
-     */
-    public function __construct(Environment $templating, ManagerInterface $session)
+    public function __construct(Environment $templating, ManagerInterface $session, AuthenticationService $authService)
     {
         $this->templating = $templating;
         $this->session = $session;
+        $this->authService = $authService;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $auth = new FormAuthAdapter();
-        $auth->setPassword('admin');
-        $res = $auth->authenticate();
+        $res = $this->authService->authenticate('first_user', 'admin');
 
-        var_dump($res);exit();
-
-        $html = $this->templating->render('main.html.twig');
+        $html = $this->templating->render('main.html.twig', [
+            'name' => $res->getIdentity(),
+        ]);
 
         return new HtmlResponse($html);
-//        return new HtmlResponse('Login action!');
     }
 }

@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Auth;
 
 use Zend\Authentication\Result;
 use Zend\Authentication\Adapter\AdapterInterface;
 
-class FormAuthAdapter implements AdapterInterface
+class AuthenticationAdapter implements AdapterInterface
 {
     private string $username;
     private string $password;
@@ -22,10 +22,10 @@ class FormAuthAdapter implements AdapterInterface
 
     public function authenticate(): Result
     {
-        $hash = password_hash('admin', PASSWORD_BCRYPT);
+        $hash = password_hash('admin', PASSWORD_DEFAULT);
 
         if (password_verify($this->password, $hash)) {
-            return new Result(Result::SUCCESS, $hash);
+            return new Result(Result::SUCCESS, $this->username);
         }
 
         return new Result(Result::FAILURE_CREDENTIAL_INVALID, $this->username);
