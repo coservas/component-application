@@ -40,15 +40,15 @@ restart: ##@running Restart all or c=<name> containers
 
 
 ### shell ###
-db: ##@console Exec mariadb
+db: ##@console Database console
 	@$(DC_EXEC) db mysql -u $(DB_USER) -p$(DB_PASS) $(DB_DATABASE)
 
-db-root: ##@console Exec mariadb as root
-	@$(DC_EXEC) db mysql -u root -p$(DB_ROOT_PASS) $(DB_DATABASE)
+# db-root: ##@console Database console as root
+# 	@$(DC_EXEC) db mysql -u root -p$(DB_ROOT_PASS) $(DB_DATABASE)
 
 bash: bash-fpm ##@console Alias bash-fpm
 
-bash-db: ##@console Exec bash on mariadb
+bash-db: ##@console Exec bash on database
 	@$(DC_EXEC) db bash
 
 bash-fpm: ##@console Exec bash on fpm

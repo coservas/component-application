@@ -2,6 +2,9 @@
 
 use App\Service\Auth\AuthenticationAdapter;
 
+use Doctrine\ORM\EntityManagerInterface;
+use ContainerInteropDoctrine\EntityManagerFactory;
+
 use Twig\Loader\LoaderInterface;
 use Twig\Loader\FilesystemLoader;
 
@@ -27,4 +30,8 @@ return [
 
     AdapterInterface::class => AuthenticationAdapter::class,
     AuthenticationService::class => AuthenticationService::class,
+
+    EntityManagerInterface::class => function() {
+        return (new EntityManagerFactory())->__invoke($this->container);
+    },
 ];

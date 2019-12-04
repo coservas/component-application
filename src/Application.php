@@ -5,9 +5,7 @@ namespace App;
 use App\Action\NotFoundAction;
 use Aura\Router\RouterContainer;
 
-use http\Exception\InvalidArgumentException;
 use League\Container\Container;
-use League\Container\Exception\NotFoundException;
 use League\Container\ReflectionContainer;
 
 use Psr\Container\ContainerInterface;
@@ -32,7 +30,9 @@ final class Application implements MiddlewarePipeInterface
         $this->setContainer();
         $this->setMiddleware();
 
+        $this->addParams();
         $this->addRoutes();
+        $this->addConfigs();
         $this->addServices();
         $this->addMiddlewares();
     }
@@ -50,6 +50,12 @@ final class Application implements MiddlewarePipeInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->pipeline->handle($request);
+    }
+
+    private function addParams(): void
+    {
+        $parameters = require 'config/parameters.php';
+        $this->container->add('parameters', $parameters);
     }
 
     private function addMiddlewares(): void
@@ -73,12 +79,19 @@ final class Application implements MiddlewarePipeInterface
         }
     }
 
+    private function addConfigs()
+    {
+        $configs = require 'config/config.php';
+
+        $this->container->add('config', $configs);
+    }
+
     private function addServices()
     {
         $services = require 'config/services.php';
 
         foreach ($services as $id => $concrete) {
-            if (is_string($concrete)) {
+            if (is_string($concrete) || is_object($concrete)) {
                 $this->container->add($id, $concrete);
                 continue;
             }

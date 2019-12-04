@@ -16,18 +16,14 @@ services:
         volumes:
             - ./..:/var/app
 
-#    db:
-#        image: mariadb:10.4
-#        restart: always
-#        environment:
-#            MYSQL_HOST:          ${DB_HOST}
-#            MYSQL_PORT:          ${DB_PORT}
-#            MYSQL_DATABASE:      ${DB_DATABASE}
-#            MYSQL_USER:          ${DB_USER}
-#            MYSQL_PASSWORD:      ${DB_PASSWORD}
-#            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-#        volumes:
-#            - db:/var/lib/mysql
-#
-#volumes:
-#    db:
+    db:
+        image: postgres:12.1-alpine
+        environment:
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASS}
+            - POSTGRES_DB=${DB_NAME}
+        volumes:
+            - db:/var/lib/postgresql/data
+
+volumes:
+    db:

@@ -6,6 +6,8 @@ use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
+App\Env::load();
+
 $request = ServerRequestFactory::fromGlobals();
 $response = (new App\Application())->process($request);
 
