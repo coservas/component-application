@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
-class User implements
+class User
 {
     private $id;
     private $email;

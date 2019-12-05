@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Action;
 
@@ -6,7 +8,6 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-
 use Zend\Diactoros\Response\HtmlResponse;
 use App\Service\Auth\AuthenticationService;
 

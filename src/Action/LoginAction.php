@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Action;
 
@@ -6,7 +8,6 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Environment;
 use App\Service\Auth\AuthenticationService;
-
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

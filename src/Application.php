@@ -1,20 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
 use App\Action\NotFoundAction;
 use Aura\Router\RouterContainer;
-
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-
 use Zend\Stratigility\MiddlewarePipe;
 use Zend\Stratigility\MiddlewarePipeInterface;
 
@@ -113,7 +111,7 @@ final class Application implements MiddlewarePipeInterface
     {
         $this->container = new Container();
         $this->container->delegate(
-            new ReflectionContainer
+            new ReflectionContainer()
         );
 
         $this->container->add(RouterContainer::class, $this->router);

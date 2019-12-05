@@ -7,14 +7,12 @@
     <arg name="colors"/>
 
     <!-- inherit rules from: -->
-    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
-        <properties>
-            <property name="ignoreBlankLines" value="false"/>
-        </properties>
-    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 
     <!-- Paths to check -->
     <file>src</file>
+    <file>config</file>
+    <file>public/index.php</file>
 </ruleset>
