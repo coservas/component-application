@@ -77,14 +77,14 @@ final class Application implements MiddlewarePipeInterface
         }
     }
 
-    private function addConfigs()
+    private function addConfigs(): void
     {
         $configs = require 'config/config.php';
 
         $this->container->add('config', $configs);
     }
 
-    private function addServices()
+    private function addServices(): void
     {
         $services = require 'config/services.php';
 

@@ -16,7 +16,7 @@ abstract class BaseAction
     protected Environment $templating;
     protected AuthenticationService $authService;
 
-    public function __construct(Environment $templating = null, AuthenticationService $authService = null)
+    public function __construct(Environment $templating, AuthenticationService $authService)
     {
         $this->templating = $templating;
         $this->authService = $authService;
@@ -30,7 +30,7 @@ abstract class BaseAction
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    protected function render(string $name, array $context = []): HtmlResponse
+    protected function render(string $name, array $context): HtmlResponse
     {
         return new HtmlResponse(
             $this->templating->render($name, $context)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Auth;
 
+use Zend\Authentication\Result;
 use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 
 class AuthenticationService
@@ -17,7 +18,7 @@ class AuthenticationService
         $this->authService = $authService;
     }
 
-    public function authenticate(string $username, string $password)
+    public function authenticate(string $username, string $password): Result
     {
         $this->adapter->setUsername($username);
         $this->adapter->setPassword($password);

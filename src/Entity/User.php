@@ -6,46 +6,48 @@ namespace App\Entity;
 
 class User
 {
-    private $id;
-    private $email;
-    private $username;
-    private $roles = [];
+    private int $id;
+    private string $email;
+    private iterable $roles = [];
 
     public function __construct()
     {
     }
 
-    /**
-     * Get the unique user identity (id, username, email address or ...)
-     */
-    public function getIdentity(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Get all user roles
-     *
-     * @return Iterable
-     */
-    public function getRoles(): iterable
+    public function getEmail(): string
     {
-        return $this->roles;
+        return $this->email;
     }
 
-    /**
-     * Get a detail $name if present, $default otherwise
-     */
-    public function getDetail(string $name, $default = null)
+    public function setEmail(string $email): void
     {
-        return $this->username;
+        $this->email = $email;
     }
 
-    /**
-     * Get all the details, if any
-     */
-    public function getDetails(): array
-    {
-        // TODO: Implement getDetails() method.
-    }
+//    public function getRoles(): iterable
+//    {
+//        return $this->roles;
+//    }
+//
+//    public function setRoles(array $roles): void
+//    {
+//        $this->roles = $roles;
+//    }
+//
+//    public function addRole(string $role): void
+//    {
+//        $this->roles[] = $role;
+//    }
+//
+//    public function deleteRole(string $role): void
+//    {
+//        if (isset($this->roles[$role])) {
+//            unset($this->roles[$role]);
+//        }
+//    }
 }

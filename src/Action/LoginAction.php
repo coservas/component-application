@@ -28,10 +28,10 @@ class LoginAction extends BaseAction implements RequestHandlerInterface
         var_dump($conf);
         exit();
 
-        $res = $this->authService->authenticate('first_user', 'admin');
+//        $res = $this->authService->authenticate('first_user', 'admin');
 
-        return $this->render('main.html.twig', [
-            'name' => $res->getIdentity(),
-        ]);
+//        return $this->render('main.html.twig', [
+//            'name' => $res->getIdentity(),
+//        ]);
     }
 }

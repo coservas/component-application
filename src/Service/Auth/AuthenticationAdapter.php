@@ -24,7 +24,7 @@ class AuthenticationAdapter implements AdapterInterface
 
     public function authenticate(): Result
     {
-        $hash = password_hash('admin', PASSWORD_DEFAULT);
+        $hash = (string) password_hash('admin', PASSWORD_DEFAULT);
 
         if (password_verify($this->password, $hash)) {
             return new Result(Result::SUCCESS, $this->username);
