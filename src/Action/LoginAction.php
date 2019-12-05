@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Environment;
 use App\Service\Auth\AuthenticationService;
@@ -12,21 +13,19 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LoginAction extends BaseAction implements RequestHandlerInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     public function __construct(Environment $templating, AuthenticationService $authService, EntityManagerInterface $em)
     {
         parent::__construct($templating, $authService);
-//        $this->em = $em;
+        $this->em = $em;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-//        $conf = $this->em->getConfiguration();
-//        var_dump($conf);exit();
+        $conf = $this->em->getRepository(User::class);
+        var_dump($conf);
+        exit();
 
         $res = $this->authService->authenticate('first_user', 'admin');
 

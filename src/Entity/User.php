@@ -2,9 +2,7 @@
 
 namespace App\Entity;
 
-use Zend\Expressive\Authentication\UserInterface;
-
-class User implements UserInterface
+class User implements
 {
     private $id;
     private $email;

@@ -23,13 +23,13 @@ return [
             'orm_default' => [
                 'class' => \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain::class,
                 'drivers' => [
-                    'My\Entity' => 'my_entity',
+                    'App\Entity' => 'entities',
                 ],
             ],
-            'my_entity' => [
-                'class' => \Doctrine\ORM\Mapping\Driver\XmlDriver::class,
+            'entities' => [
+                'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
                 'cache' => 'array',
-                'paths' => __DIR__ . '/doctrine',
+                'paths' => ['src/Entity'],
             ],
         ],
     ],
