@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Action;
 
-use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use Zend\Diactoros\Response\HtmlResponse;
 use App\Service\Auth\AuthenticationService;
+use Zend\Diactoros\Response\HtmlResponse;
+use Twig\Environment;
 
 abstract class BaseAction
 {
@@ -22,18 +19,15 @@ abstract class BaseAction
         $this->authService = $authService;
     }
 
-    /**
-     * @param string $name
-     * @param array $context
-     * @return HtmlResponse
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
     protected function render(string $name, array $context): HtmlResponse
     {
         return new HtmlResponse(
             $this->templating->render($name, $context)
         );
+    }
+
+    protected function getUser(): ?string
+    {
+        return $this->authService->getUser();
     }
 }
