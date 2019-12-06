@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Action\NotFoundAction;
+use Aura\Router\Generator;
 use Aura\Router\RouterContainer;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
@@ -61,7 +62,22 @@ final class Application implements MiddlewarePipeInterface
         $middlewares = require 'config/middlewares.php';
 
         foreach ($middlewares as $middleware) {
-            $this->pipe($this->container->get($middleware));
+            if (is_string($middleware)) {
+                $this->pipe($this->container->get($middleware));
+                continue;
+            }
+
+            if (is_object($middleware)) {
+                $this->pipe($middleware);
+                continue;
+            }
+
+            if (is_array($middleware)) {
+                $this->pipe(new $middleware['class'](...$middleware['args']));
+                continue;
+            }
+
+            throw new \Exception('Non valid middleware.');
         }
     }
 
@@ -103,7 +119,7 @@ final class Application implements MiddlewarePipeInterface
                 continue;
             }
 
-            throw new \Exception('Non valid scheme.');
+            throw new \Exception('Non valid service.');
         }
     }
 
@@ -115,6 +131,7 @@ final class Application implements MiddlewarePipeInterface
         );
 
         $this->container->add(RouterContainer::class, $this->router);
+        $this->container->add(Generator::class, $this->router->getGenerator());
         $this->container->add(ContainerInterface::class, $this->container);
     }
 
