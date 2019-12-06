@@ -25,4 +25,9 @@ class AuthenticationService
 
         return $this->authService->authenticate($this->adapter);
     }
+
+    public function getUser(): ?string
+    {
+        return $this->authService->getIdentity();
+    }
 }

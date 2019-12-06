@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-class User
+class User implements UserInterface
 {
     private int $id;
     private string $email;
-    private iterable $roles = [];
+    private array $roles = [];
 
     public function __construct()
     {
