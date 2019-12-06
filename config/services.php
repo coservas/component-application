@@ -26,5 +26,6 @@ return [
     AdapterInterface::class => AuthenticationAdapter::class,
     AuthenticationService::class => AuthenticationService::class,
 
-    EntityManagerInterface::class => fn() => (new EntityManagerFactory())->__invoke($this->container),
+    EntityManagerInterface::class => fn(): EntityManagerInterface
+        => (new EntityManagerFactory())->__invoke($this->container),
 ];

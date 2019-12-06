@@ -67,7 +67,7 @@ final class Application implements MiddlewarePipeInterface
                 continue;
             }
 
-            if (is_object($middleware)) {
+            if (is_object($middleware) && ($middleware instanceof MiddlewareInterface)) {
                 $this->pipe($middleware);
                 continue;
             }

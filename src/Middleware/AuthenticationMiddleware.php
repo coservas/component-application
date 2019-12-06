@@ -24,12 +24,12 @@ class AuthenticationMiddleware implements MiddlewareInterface
         $this->routeGenerator = $routeGenerator;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $user = $this->auth->getUser();
         if (null === $user) {
             return new RedirectResponse(
-                $this->routeGenerator->generate('login')
+                (string) $this->routeGenerator->generate('login')
             );
         }
 
