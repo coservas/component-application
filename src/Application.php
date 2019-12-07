@@ -111,7 +111,7 @@ final class Application implements MiddlewarePipeInterface
             }
 
             if (is_array($concrete)) {
-                if ($concrete['args']) {
+                if (isset($concrete['args'])) {
                     $this->container->add($id, $concrete['class'])->addArguments($concrete['args']);
                 } else {
                     $this->container->add($id, $concrete['class']);
