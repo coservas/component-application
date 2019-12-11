@@ -6,19 +6,26 @@ namespace App\Action;
 
 use App\Service\Auth\AuthenticationService;
 use Zend\Diactoros\Response\HtmlResponse;
-use Twig\Environment;
 
 abstract class BaseAction
 {
-    protected Environment $templating;
+    protected \Twig\Environment $templating;
     protected AuthenticationService $authService;
 
-    public function __construct(Environment $templating, AuthenticationService $authService)
+    public function __construct(\Twig\Environment $templating, AuthenticationService $authService)
     {
         $this->templating = $templating;
         $this->authService = $authService;
     }
 
+    /**
+     * @param string $name
+     * @param array<string, string|array> $context
+     * @return HtmlResponse
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     */
     protected function render(string $name, array $context): HtmlResponse
     {
         return new HtmlResponse(

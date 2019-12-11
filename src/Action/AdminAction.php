@@ -13,7 +13,7 @@ class AdminAction extends BaseAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->render('admin.html.twig', [
-            'name' => $this->getUser(),
+            'name' => (string) $this->getUser(),
         ]);
     }
 }
