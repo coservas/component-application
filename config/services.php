@@ -1,6 +1,10 @@
 <?php
 
 use App\Service\Auth\AuthenticationAdapter;
+use App\Service\Translator\MessagesLoaderInterface;
+use App\Service\Translator\PhpMessagesLoader;
+use App\Service\Translator\TranslatorFactory;
+use App\Service\Translator\TranslatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use ContainerInteropDoctrine\EntityManagerFactory;
 use Twig\Loader\LoaderInterface;
@@ -27,5 +31,10 @@ return [
     AuthenticationService::class => AuthenticationService::class,
 
     EntityManagerInterface::class => fn(): EntityManagerInterface
-        => (new EntityManagerFactory())->__invoke($this->container),
+        => (new EntityManagerFactory())($this->container),
+
+    MessagesLoaderInterface::class => PhpMessagesLoader::class,
+
+    TranslatorInterface::class => fn(): TranslatorInterface
+        => (new TranslatorFactory())($this->container->get(MessagesLoaderInterface::class)),
 ];
