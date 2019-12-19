@@ -8,7 +8,9 @@ class User implements UserInterface
 {
     private int $id;
     private string $email;
-    private array $roles = [];
+
+    /** @var string[] */
+    public array $roles = [];
 
     public function __construct()
     {
