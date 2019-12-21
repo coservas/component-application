@@ -14,7 +14,7 @@ class LoginAction extends BaseAction implements RequestHandlerInterface
     {
         $res = $this->authService->authenticate('first_user', 'admin');
 
-        return $this->render('main.html.twig', [
+        return $this->render('login.html.twig', [
             'name' => $res->getIdentity(),
         ]);
     }

@@ -1,2 +1,25 @@
-Login page<br>
-{{ 'Hello, ' ~ name ~ '!' }}
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    {% block head %}
+        {% include 'common/head.html.twig' %}
+    {% endblock %}
+</head>
+
+<body>
+{% block content %}
+    <div class="dashboard-main-wrapper">
+        {% include 'common/header.html.twig' %}
+        {% include 'common/left_sidebar.html.twig' %}
+        {% include 'common/dashboard.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {% include 'common/js.html.twig' %}
+{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+{% extends 'main.html.twig' %}
+
+{% block content %}
+    <div class="splash-container">
+        <div class="card ">
+            <div class="card-header text-center"><a href="{{ path('check-login') }}"><img class="logo-img" src="../assets/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
+            <div class="card-body">
+                <login-form
+                    id="login-form"
+                    remember-me-text="{{ 'Запомнить меня' }}"
+                    sign-in-text="{{ 'Войти' }}"
+                    username-text="{{ 'username'|trans }}"
+                    password-text="{{ 'password'|trans }}"
+                    check-login-url="{{ path('check-login') }}"
+                ></login-form>
+            </div>
+
+            <div class="card-footer bg-white p-0  ">
+                <div class="card-footer-item card-footer-item-bordered">
+                    <a href="#" class="footer-link">Create An Account</a>
+                </div>
+
+                <div class="card-footer-item card-footer-item-bordered">
+                    <a href="#" class="footer-link">Forgot Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script>
+        new Vue({
+            el: '#login-form',
+            data() { return {}; },
+        });
+    </script>
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+    </style>
+{% endblock %}
