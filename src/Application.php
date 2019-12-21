@@ -89,6 +89,12 @@ final class Application implements MiddlewarePipeInterface
         foreach ($routes as $route) {
             if (false !== array_search('get', $route['methods'])) {
                 $map->get($route['name'], $route['path'], $route['handler']);
+                continue;
+            }
+
+            if (false !== array_search('post', $route['methods'])) {
+                $map->post($route['name'], $route['path'], $route['handler']);
+                continue;
             }
         }
     }

@@ -13,4 +13,10 @@ return [
         'path' => '/admin',
         'handler' => App\Action\AdminAction::class,
     ],
+    [
+        'methods' => ['post'],
+        'name' => 'check-login',
+        'path' => '/check-login',
+        'handler' => App\Action\CheckLoginAction::class,
+    ],
 ];
