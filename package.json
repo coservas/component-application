@@ -1,10 +1,21 @@
 {
+  "dependencies": {
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
+    "vue": "^2.6.11"
+  },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.28.2"
+    "@symfony/webpack-encore": "^0.28.2",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^7.0.1",
+    "standard": "^14.3.1",
+    "vue-loader": "^15.0.11",
+    "vue-template-compiler": "^2.6.11"
   },
   "scripts": {
     "build": "./node_modules/.bin/encore production",
     "watch": "./node_modules/.bin/encore dev --watch",
-    "dev": "./node_modules/.bin/encore dev"
+    "dev": "./node_modules/.bin/encore dev",
+    "fix": "./node_modules/.bin/standard --fix assets/components/**/*.js assets/app.js"
   }
 }
