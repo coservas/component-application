@@ -7,21 +7,23 @@
             <div class="card-body">
                 <login-form
                     id="login-form"
-                    remember-me-text="{{ 'Запомнить меня' }}"
-                    sign-in-text="{{ 'Войти' }}"
+                    sign-in-text="{{ 'sign_in'|trans }}"
                     username-text="{{ 'username'|trans }}"
                     password-text="{{ 'password'|trans }}"
+                    remember-me-text="{{ 'remember_me'|trans }}"
+                    invalid-password-text="{{ 'small_password'|trans }}"
+                    invalid-username-text="{{ 'invalid_username'|trans }}"
                     check-login-url="{{ path('check-login') }}"
                 ></login-form>
             </div>
 
             <div class="card-footer bg-white p-0  ">
                 <div class="card-footer-item card-footer-item-bordered">
-                    <a href="#" class="footer-link">Create An Account</a>
+                    <a href="#" class="footer-link">{{ 'create_account'|trans }}</a>
                 </div>
 
                 <div class="card-footer-item card-footer-item-bordered">
-                    <a href="#" class="footer-link">Forgot Password</a>
+                    <a href="#" class="footer-link">{{ 'forgot_password'|trans }}</a>
                 </div>
             </div>
         </div>

@@ -1,12 +1,12 @@
 <template>
     <form action="#">
 
-        <div v-show="errorText.length > 0" class="form-group">
-            <div class="alert alert-danger" role="alert"></div>
+        <div v-show="error.length > 0" class="form-group">
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
 
         <div class="form-group">
-            <input :class="['form-control', 'form-control-lg', !isValidUsername ? 'is-invalid' : '']" id="username" type="text" :placeholder="usernameText" autocomplete="off" v-model="username">
+            <input :class="['form-control', 'form-control-lg', !isValidUsername ? 'is-invalid' : '']" id="username" type="text" :placeholder="usernameText" autocomplete="on" v-model="username">
             <div class="invalid-feedback">{{ invalidUsernameText }}</div>
         </div>
 
@@ -17,7 +17,7 @@
 
         <div class="form-group">
             <label class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox"><span class="custom-control-label">{{ rememberMeText }}</span>
+                <input v-model="rememberMe" class="custom-control-input" type="checkbox"><span class="custom-control-label">{{ rememberMeText }}</span>
             </label>
         </div>
 
@@ -53,6 +53,10 @@
                 type: String,
                 default: 'Invalid username'
             },
+            errorText: {
+                type: String,
+                default: 'Service is temporarily unavailable'
+            },
             checkLoginUrl: {
                 type: String,
                 default: '/'
@@ -61,11 +65,12 @@
 
         data() {
             return {
+                error: '',
                 username: '',
                 password: '',
+                rememberMe: false,
                 isValidUsername: true,
                 isValidPassword: true,
-                errorText: '',
                 emailValidator: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
             }
         },
@@ -74,7 +79,7 @@
             async submit(event) {
                 event.preventDefault()
 
-                if (!this.validateFields()) {
+                if (!this.isValidatedFields()) {
                     return
                 }
 
@@ -83,13 +88,26 @@
                         username: this.username,
                         password: this.password
                     });
-                    console.log(response)
+
+                    if (response.data && response.data.status !== 'success') {
+                        this.setError(response.data.message)
+                        return
+                    }
+
+                    this.clearError()
+                    if (undefined === response.data.url) {
+                        this.setError()
+                        return
+                    }
+
+                    window.location.href = response.data.url;
                 } catch (error) {
-                    console.error(error)
+                    this.setError()
+                    console.log(error);
                 }
             },
 
-            validateFields() {
+            isValidatedFields() {
                 this.validateUsername()
                 this.validatePassword()
                 return this.isValidUsername && this.isValidPassword
@@ -101,7 +119,15 @@
 
             validatePassword() {
                 this.isValidPassword = (this.password.length > 3)
-            }
+            },
+
+            setError(text = this.errorText) {
+                this.error = text
+            },
+
+            clearError() {
+                this.error = ''
+            },
         },
 
         watch: {
@@ -111,7 +137,7 @@
 
             password() {
                 this.validatePassword()
-            }
+            },
         }
     }
 </script>
