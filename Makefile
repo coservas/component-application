@@ -71,19 +71,28 @@ logs: ##@info Show all or c=<name> logs of containers
 
 
 ### inactive ###
+TASK_COUNT := 4
 install: # Install project
 	@echo -e '\n'
 	@echo '-------------------------------'
 	@echo '| Installing, please wait ... |'
-	@make build $(QUIET)
-	@echo '| 1/3 ...                     |'
-	@make restart $(QUIET)
-	@echo '| 2/3 ...                     |'
-	@$(DC_EXEC) fpm composer install $(QUIET)
-	@echo '| 3/3 ...                     |'
+# 	@make build $(QUIET)
+	@echo '| 1/$(TASK_COUNT) ...                     |'
+# 	@make restart $(QUIET)
+	@echo '| 2/$(TASK_COUNT) ...                     |'
+# 	@$(DC_EXEC) fpm composer install $(QUIET)
+	@echo '| 3/$(TASK_COUNT) ...                     |'
+#     @$(DC_EXEC) fpm yarn build $(QUIET)
+	@echo '| 4/$(TASK_COUNT) ...                     |'
 	@echo '| Done.                       |'
 	@echo '-------------------------------'
 	@echo 'Installation completed successfully!'
 	@echo 'Now you can start the project in browser at 0.0.0.0:$(NGINX_PORT)'
 	@echo -e '\n'
 ### inactive ###
+
+
+### debug ###
+watch:
+	@$(DC_EXEC) fpm yarn watch
+### debug ###
