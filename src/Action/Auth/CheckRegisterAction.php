@@ -20,7 +20,12 @@ class CheckRegisterAction extends BaseAction implements RequestHandlerInterface
             }
 
             $params = json_decode($body, true);
-            if (null === $params || !isset($params['username']) || !isset($params['password']) || !isset($params['confirm_password'])) {
+            if (
+                null === $params ||
+                !isset($params['username']) ||
+                !isset($params['password']) ||
+                !isset($params['confirm_password'])
+            ) {
                 throw new \Exception('Params "username" or "password" or "confirm_password" not found');
             }
 

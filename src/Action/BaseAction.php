@@ -48,7 +48,12 @@ abstract class BaseAction
         );
     }
 
-    protected function jsonResponse(array $data, int $status = 200)
+    /**
+     * @param array<mixed> $data
+     * @param int $status
+     * @return JsonResponse
+     */
+    protected function jsonResponse(array $data, int $status = 200): JsonResponse
     {
         return new JsonResponse($data, $status);
     }

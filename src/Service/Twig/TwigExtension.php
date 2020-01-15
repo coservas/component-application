@@ -33,17 +33,21 @@ class TwigExtension
 
     protected function addFilters(): void
     {
-        $this->twig->addFilter(new \Twig\TwigFilter(
-            TranslatorTwigFilter::NAME,
-            [$this->container->get(TranslatorTwigFilter::class), 'translate'],
-        ));
+        $this->twig->addFilter(
+            new \Twig\TwigFilter(
+                TranslatorTwigFilter::NAME,
+                [$this->container->get(TranslatorTwigFilter::class), 'translate'],
+            )
+        );
     }
 
     protected function addFunctions(): void
     {
-        $this->twig->addFunction(new \Twig\TwigFunction(
-            'path',
-            [$this->container->get(Generator::class), 'generate'],
-        ));
+        $this->twig->addFunction(
+            new \Twig\TwigFunction(
+                'path',
+                [$this->container->get(Generator::class), 'generate'],
+            )
+        );
     }
 }
