@@ -1,27 +1,25 @@
 <template>
-    <form action="#">
-
+    <form>
         <div v-show="error.length > 0" class="form-group">
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
 
         <div class="form-group">
-            <input :class="['form-control', 'form-control-lg', !isValidUsername ? 'is-invalid' : '']" id="username" type="text" :placeholder="usernameText" autocomplete="on" v-model="username">
+            <input :class="['form-control', 'form-control-lg', !isValidUsername ? 'is-invalid' : '']" type="text" :placeholder="usernameText" autocomplete="on" v-model="username">
             <div class="invalid-feedback">{{ invalidUsernameText }}</div>
         </div>
 
         <div class="form-group">
-            <input :class="['form-control', 'form-control-lg', !isValidPassword ? 'is-invalid' : '']" id="password" type="password" :placeholder="passwordText" v-model="password">
+            <input :class="['form-control', 'form-control-lg', !isValidPassword ? 'is-invalid' : '']" type="password" :placeholder="passwordText" v-model="password">
             <div class="invalid-feedback">{{ invalidPasswordText }}</div>
         </div>
 
         <div class="form-group">
-            <label class="custom-control custom-checkbox">
-                <input v-model="rememberMe" class="custom-control-input" type="checkbox"><span class="custom-control-label">{{ rememberMeText }}</span>
-            </label>
+            <input :class="['form-control', 'form-control-lg', !isValidConfirmPassword ? 'is-invalid' : '']" type="password" :placeholder="confirmPasswordText" v-model="confirmPassword">
+            <div class="invalid-feedback">{{ invalidConfirmPasswordText }}</div>
         </div>
 
-        <button @click="submit" type="submit" class="btn btn-primary btn-lg btn-block">{{ signInText }}</button>
+        <button @click="submit" type="submit" class="btn btn-primary btn-lg btn-block">{{ registerText }}</button>
     </form>
 </template>
 
@@ -37,27 +35,31 @@
                 type: String,
                 default: 'Password'
             },
-            rememberMeText: {
+            confirmPasswordText: {
                 type: String,
-                default: 'Remember Me'
-            },
-            signInText: {
-                type: String,
-                default: 'Sign in'
+                default: 'Confirm password'
             },
             invalidPasswordText: {
                 type: String,
                 default: 'Invalid password'
             },
+            invalidConfirmPasswordText: {
+                type: String,
+                default: 'Invalid confirm password'
+            },
             invalidUsernameText: {
                 type: String,
                 default: 'Invalid username'
+            },
+            registerText: {
+                type: String,
+                default: 'Register'
             },
             errorText: {
                 type: String,
                 default: 'Service is temporarily unavailable'
             },
-            checkLoginUrl: {
+            checkRegisterUrl: {
                 type: String,
                 default: '/'
             },
@@ -68,9 +70,11 @@
                 error: '',
                 username: '',
                 password: '',
+                confirmPassword: '',
                 rememberMe: false,
                 isValidUsername: true,
                 isValidPassword: true,
+                isValidConfirmPassword: true,
                 emailValidator: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
             }
         },
@@ -84,9 +88,10 @@
                 }
 
                 try {
-                    const response = await axios.post(this.checkLoginUrl, {
+                    const response = await axios.post(this.checkRegisterUrl, {
                         username: this.username,
-                        password: this.password
+                        password: this.password,
+                        confirm_password: this.confirmPassword
                     });
 
                     this.clearError()
@@ -111,7 +116,8 @@
             isValidatedFields() {
                 this.validateUsername()
                 this.validatePassword()
-                return this.isValidUsername && this.isValidPassword
+                this.validateConfirmPassword()
+                return this.isValidUsername && this.isValidPassword && this.isValidConfirmPassword
             },
 
             validateUsername() {
@@ -120,6 +126,10 @@
 
             validatePassword() {
                 this.isValidPassword = (this.password.length > 3)
+            },
+
+            validateConfirmPassword() {
+                this.isValidConfirmPassword = (this.password === this.confirmPassword) && (this.confirmPassword.length > 0)
             },
 
             setError(text = this.errorText) {
@@ -138,6 +148,10 @@
 
             password() {
                 this.validatePassword()
+            },
+
+            confirmPassword() {
+                this.validateConfirmPassword()
             },
         }
     }

@@ -9,25 +9,23 @@
             </div>
 
             <div class="card-body">
-                <login-form
-                    id="login-form"
-                    sign-in-text="{{ 'sign_in'|trans }}"
+                <register-form
+                    id="register-form"
+                    register-text="{{ 'register'|trans }}"
                     username-text="{{ 'username'|trans }}"
                     password-text="{{ 'password'|trans }}"
+                    confirm-password-text="{{ 'confirm_password'|trans }}"
                     remember-me-text="{{ 'remember_me'|trans }}"
-                    invalid-password-text="{{ 'small_password'|trans }}"
                     invalid-username-text="{{ 'invalid_username'|trans }}"
-                    check-login-url="{{ path('check-login') }}"
-                ></login-form>
+                    invalid-password-text="{{ 'small_password'|trans }}"
+                    invalid-confirm-password-text="{{ 'invalid_confirm_password'|trans }}"
+                    check-register-url="{{ path('check-register') }}"
+                ></register-form>
             </div>
 
             <div class="card-footer bg-white p-0  ">
-                <div class="card-footer-item card-footer-item-bordered">
-                    <a href="{{ path('register') }}" class="footer-link">{{ 'create_account'|trans }}</a>
-                </div>
-
-                <div class="card-footer-item card-footer-item-bordered">
-                    <a href="#" class="footer-link">{{ 'forgot_password'|trans }}</a>
+                <div class="card-footer-item card-footer-item-bordered col-12">
+                    <a href="{{ path('login') }}" class="footer-link">{{ 'sign_in'|trans }}</a>
                 </div>
             </div>
         </div>
@@ -39,7 +37,7 @@
 
     <script>
         new Vue({
-            el: '#login-form',
+            el: '#register-form',
             data() { return {}; },
         });
     </script>
