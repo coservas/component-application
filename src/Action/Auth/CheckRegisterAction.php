@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Action;
+namespace App\Action\Auth;
 
+use App\Action\BaseAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class CheckLoginAction extends BaseAction implements RequestHandlerInterface
+class CheckRegisterAction extends BaseAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -19,21 +20,20 @@ class CheckLoginAction extends BaseAction implements RequestHandlerInterface
             }
 
             $params = json_decode($body, true);
-            if (null === $params || !isset($params['username']) || !isset($params['password'])) {
-                throw new \Exception('Params \'username\' or \'password\' not found');
+            if (null === $params || !isset($params['username']) || !isset($params['password']) || !isset($params['confirm_password'])) {
+                throw new \Exception('Params "username" or "password" or "confirm_password" not found');
             }
 
-            $isAuth = $this->authService
-                ->authenticate($params['username'], $params['password'])
-                ->isValid();
-
-            if (!$isAuth) {
-                throw new \Exception('Wrong username or password');
+            if ($params['password'] !== $params['confirm_password']) {
+                throw new \Exception('Passwords is mismatching');
             }
+
+            // send mail to email
 
             return $this->jsonResponse([
                 'status' => 'success',
-                'message' => 'User found'
+                'message' => 'User found',
+                'url' => $this->generator->generate('register-completed'),
             ]);
         } catch (\Exception $e) {
             return $this->jsonResponse([
