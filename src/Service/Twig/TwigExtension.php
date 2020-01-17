@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\LoaderInterface;
 
-class TwigExtension
+final class TwigExtension
 {
     private Environment $twig;
     private ContainerInterface $container;
@@ -21,9 +21,10 @@ class TwigExtension
         return $this->createEnvironment();
     }
 
-    protected function createEnvironment(): Environment
+    private function createEnvironment(): Environment
     {
         $this->twig = new Environment($this->container->get(LoaderInterface::class));
+        $this->twig->addRuntimeLoader($this->container->get(ContainerLoader::class));
 
         $this->addFilters();
         $this->addFunctions();
@@ -31,22 +32,22 @@ class TwigExtension
         return $this->twig;
     }
 
-    protected function addFilters(): void
+    private function addFilters(): void
     {
         $this->twig->addFilter(
             new \Twig\TwigFilter(
                 TranslatorTwigFilter::NAME,
-                [$this->container->get(TranslatorTwigFilter::class), 'translate'],
+                [TranslatorTwigFilter::class, 'translate'],
             )
         );
     }
 
-    protected function addFunctions(): void
+    private function addFunctions(): void
     {
         $this->twig->addFunction(
             new \Twig\TwigFunction(
                 'path',
-                [$this->container->get(Generator::class), 'generate'],
+                [Generator::class, 'generate'],
             )
         );
     }
