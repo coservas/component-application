@@ -8,15 +8,18 @@ use Dotenv\Dotenv;
 
 class Env
 {
-    private const PATHS = ['.'];
+    private const PATH = '.';
+    private const BASE_ENV_NAME = '.env';
+    private const LOCAL_ENV_NAME = '.env.local';
 
     public static function load(): void
     {
-        $dotenv = Dotenv::createImmutable(self::PATHS);
+        $dotenv = Dotenv::createMutable(self::PATH, self::BASE_ENV_NAME);
         $dotenv->load();
 
-        if (file_exists('.env.local')) {
-            $dotenv = Dotenv::createMutable(self::PATHS, '.env.local');
+        $pathname = self::PATH . DIRECTORY_SEPARATOR . self::LOCAL_ENV_NAME;
+        if (file_exists($pathname)) {
+            $dotenv = Dotenv::createMutable(self::PATH, self::LOCAL_ENV_NAME);
             $dotenv->load();
         }
     }
