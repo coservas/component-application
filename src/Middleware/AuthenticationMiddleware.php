@@ -6,30 +6,39 @@ namespace App\Middleware;
 
 use App\Entity\UserInterface;
 use App\Service\Auth\AuthenticationService;
-use Aura\Router\Generator;
+use Aura\Router\RouterContainer;
+use Zend\Diactoros\Response\RedirectResponse;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\RedirectResponse;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    protected AuthenticationService $auth;
-    private Generator $routeGenerator;
+    private RouterContainer $router;
+    private AuthenticationService $auth;
+    private ContainerInterface $container;
 
-    public function __construct(AuthenticationService $auth, Generator $routeGenerator)
+    public function __construct(ContainerInterface $container, AuthenticationService $auth, RouterContainer $router)
     {
         $this->auth = $auth;
-        $this->routeGenerator = $routeGenerator;
+        $this->router = $router;
+        $this->container = $container;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $user = $this->auth->getUser();
-        if (null === $user) {
+
+        $accessControlList = $this->container->get('config')['security']['access_control'];
+        foreach ($accessControlList as $item) {
+            if (!preg_match(sprintf("#%s#", $item['path']), $request->getUri()->getPath()) && !$user) {
+                continue;
+            }
+
             return new RedirectResponse(
-                (string) $this->routeGenerator->generate('login')
+                (string) $this->router->getGenerator()->generate('login')
             );
         }
 
