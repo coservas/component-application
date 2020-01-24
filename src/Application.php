@@ -6,6 +6,7 @@ namespace App;
 
 use App\Action\NotFoundAction;
 use Aura\Router\Generator;
+use Aura\Router\Map;
 use Aura\Router\RouterContainer;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
@@ -19,7 +20,7 @@ use Zend\Stratigility\MiddlewarePipeInterface;
 
 final class Application implements MiddlewarePipeInterface
 {
-    private Container $container;
+    private ContainerInterface $container;
     private MiddlewarePipe $pipeline;
     private RouterContainer $router;
 
@@ -36,19 +37,27 @@ final class Application implements MiddlewarePipeInterface
         $this->addMiddlewares();
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler = null): ResponseInterface
+    private function setRouter(): void
     {
-        return $this->pipeline->process($request, $handler ?? $this->container->get(NotFoundAction::class));
+        $this->router = new RouterContainer();
     }
 
-    public function pipe(MiddlewareInterface $middleware): void
+    private function setContainer(): void
     {
-        $this->pipeline->pipe($middleware);
+        $this->container = new Container();
+        $this->container->delegate(
+            new ReflectionContainer()
+        );
+
+        $this->container->add(RouterContainer::class, $this->router);
+        $this->container->add(Generator::class, $this->router->getGenerator());
+        $this->container->add(Map::class, $this->router->getMap());
+        $this->container->add(ContainerInterface::class, $this->container);
     }
 
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    private function setMiddleware(): void
     {
-        return $this->pipeline->handle($request);
+        $this->pipeline = new MiddlewarePipe();
     }
 
     private function addParams(): void
@@ -87,15 +96,25 @@ final class Application implements MiddlewarePipeInterface
 
         $map = $this->router->getMap();
         foreach ($routes as $route) {
-            if (false !== array_search('get', $route['methods'])) {
-                $map->get($route['name'], $route['path'], $route['handler']);
-                continue;
+            $methods = $route['methods'];
+
+            if (is_string($methods)) {
+                $this->checkMethod($methods);
             }
 
-            if (false !== array_search('post', $route['methods'])) {
-                $map->post($route['name'], $route['path'], $route['handler']);
-                continue;
+            if (is_array($methods)) {
+                foreach ($methods as $method) {
+                    $this->checkMethod($method);
+                    $map->$method($route['name'], $route['path'], $route['handler']);
+                }
             }
+        }
+    }
+
+    private function checkMethod(string $method)
+    {
+        if (false === array_search($method, ['get', 'post'])) {
+            throw new \Exception('Method not found');
         }
     }
 
@@ -129,25 +148,18 @@ final class Application implements MiddlewarePipeInterface
         }
     }
 
-    private function setContainer(): void
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler = null): ResponseInterface
     {
-        $this->container = new Container();
-        $this->container->delegate(
-            new ReflectionContainer()
-        );
-
-        $this->container->add(RouterContainer::class, $this->router);
-        $this->container->add(Generator::class, $this->router->getGenerator());
-        $this->container->add(ContainerInterface::class, $this->container);
+        return $this->pipeline->process($request, $handler ?? $this->container->get(NotFoundAction::class));
     }
 
-    private function setRouter(): void
+    public function pipe(MiddlewareInterface $middleware): void
     {
-        $this->router = new RouterContainer();
+        $this->pipeline->pipe($middleware);
     }
 
-    private function setMiddleware(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->pipeline = new MiddlewarePipe();
+        return $this->pipeline->handle($request);
     }
 }
