@@ -21,6 +21,7 @@
     },
     "require": {
         "dasprid/container-interop-doctrine": "^1.1",
+        "doctrine/migrations": "^2.2",
         "doctrine/orm": "^2.7",
         "league/container": "^3.3",
         "middlewares/aura-router": "^1.1",

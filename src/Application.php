@@ -20,7 +20,7 @@ use Zend\Stratigility\MiddlewarePipeInterface;
 
 final class Application implements MiddlewarePipeInterface
 {
-    private ContainerInterface $container;
+    private Container $container;
     private MiddlewarePipe $pipeline;
     private RouterContainer $router;
 
@@ -161,5 +161,10 @@ final class Application implements MiddlewarePipeInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->pipeline->handle($request);
+    }
+
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
     }
 }
