@@ -25,6 +25,11 @@ class User implements UserInterface
     private string $email;
 
     /**
+     * @ORM\Column(length=255, nullable=true)
+     */
+    private string $password;
+
+    /**
      * @ORM\Column(type="array")
      * @var string[]
      */
@@ -70,4 +75,13 @@ class User implements UserInterface
 //            unset($this->roles[$role]);
 //        }
 //    }
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
 }

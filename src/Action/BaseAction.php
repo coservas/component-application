@@ -41,7 +41,7 @@ abstract class BaseAction
      * @throws SyntaxError
      * @throws RuntimeError
      */
-    protected function render(string $name, array $context): HtmlResponse
+    protected function render(string $name, array $context = []): HtmlResponse
     {
         return new HtmlResponse(
             $this->templating->render($name, $context)

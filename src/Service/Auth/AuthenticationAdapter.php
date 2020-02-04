@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Auth;
 
+use App\Entity\User;
+use App\Entity\UserInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Zend\Authentication\Result;
 use Zend\Authentication\Adapter\AdapterInterface;
 
@@ -11,6 +14,12 @@ class AuthenticationAdapter implements AdapterInterface
 {
     private string $username;
     private string $password;
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     public function setUsername(string $username): void
     {
@@ -24,9 +33,11 @@ class AuthenticationAdapter implements AdapterInterface
 
     public function authenticate(): Result
     {
-        $hash = (string) password_hash('admin', PASSWORD_DEFAULT);
+        /* @var UserInterface $user */
+        $user = $this->em->getRepository(User::class)
+            ->findOneBy(['email' => $this->username]);
 
-        if (password_verify($this->password, $hash)) {
+        if ($user && password_verify($this->password, $user->getPassword())) {
             return new Result(Result::SUCCESS, $this->username);
         }
 

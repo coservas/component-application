@@ -6,40 +6,41 @@ namespace App\Middleware;
 
 use App\Entity\UserInterface;
 use App\Service\Auth\AuthenticationService;
-use Aura\Router\RouterContainer;
-use Zend\Diactoros\Response\RedirectResponse;
+use Aura\Router\Generator;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Zend\Diactoros\Response\RedirectResponse;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    private RouterContainer $router;
     private AuthenticationService $auth;
     private ContainerInterface $container;
+    private Generator $generator;
 
-    public function __construct(ContainerInterface $container, AuthenticationService $auth, RouterContainer $router)
+    public function __construct(ContainerInterface $container, AuthenticationService $auth, Generator $generator)
     {
         $this->auth = $auth;
-        $this->router = $router;
         $this->container = $container;
+        $this->generator = $generator;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $user = $this->auth->getUser();
+        $list = $this->container->get('config')['security']['access_control'];
 
-        $accessControlList = $this->container->get('config')['security']['access_control'];
-        foreach ($accessControlList as $item) {
-            if (!preg_match(sprintf("#%s#", $item['path']), $request->getUri()->getPath()) && !$user) {
-                continue;
+        foreach ($list as $item) {
+            $path = $request->getUri()->getPath();
+
+            $isSecurityPath = !!(preg_match(sprintf("#%s#", $item['path']), $path));
+            if ($isSecurityPath && !$user) {
+                return new RedirectResponse(
+                    (string) $this->generator->generate('login')
+                );
             }
-
-            return new RedirectResponse(
-                (string) $this->router->getGenerator()->generate('login')
-            );
         }
 
         return $handler->handle($request->withAttribute(UserInterface::class, $user));

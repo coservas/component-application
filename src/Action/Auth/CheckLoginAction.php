@@ -21,7 +21,7 @@ class CheckLoginAction extends BaseAction implements RequestHandlerInterface
 
             $params = json_decode($body, true);
             if (null === $params || !isset($params['username']) || !isset($params['password'])) {
-                throw new \Exception('Params \'username\' or \'password\' not found');
+                throw new \Exception("Params 'username' or 'password' not found");
             }
 
             $isAuth = $this->authService

@@ -13,10 +13,6 @@ class LoginAction extends BaseAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-//        $res = $this->authService->authenticate('first_user', 'admin');
-
-        return $this->render('login.html.twig', [
-//            'name' => $res->getIdentity(),
-        ]);
+        return $this->render('login.html.twig');
     }
 }

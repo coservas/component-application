@@ -11,7 +11,7 @@ class PhpMessagesLoader implements MessagesLoaderInterface
     public function load(): array
     {
         $messages = [];
-        foreach ($this->getFilesNames() as $name) {
+        foreach ($this->getFileNames() as $name) {
             $matches = [];
             if (!preg_match('/.+\.(?<lang>[a-zA-Z]{2})\.php$/', $name, $matches)) {
                 continue;
@@ -36,7 +36,7 @@ class PhpMessagesLoader implements MessagesLoaderInterface
      * @return array<int,string>
      * @throws \Exception
      */
-    protected function getFilesNames(): array
+    private function getFileNames(): array
     {
         $fileNames = scandir(self::DIR_WITH_LANG_FILES);
         if (false === $fileNames) {
