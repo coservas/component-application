@@ -15,4 +15,5 @@
     <file>src</file>
     <file>config</file>
     <file>public/index.php</file>
+    <exclude-pattern>src/Migrations/*$</exclude-pattern>
 </ruleset>

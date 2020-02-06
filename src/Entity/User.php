@@ -7,8 +7,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
  * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
 {
@@ -35,10 +35,6 @@ class User implements UserInterface
      */
     private array $roles = [];
 
-    public function __construct()
-    {
-    }
-
     public function getId(): int
     {
         return $this->id;
@@ -49,39 +45,20 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): User
     {
         $this->email = $email;
-    }
-
-//    public function getRoles(): iterable
-//    {
-//        return $this->roles;
-//    }
-//
-//    public function setRoles(array $roles): void
-//    {
-//        $this->roles = $roles;
-//    }
-//
-//    public function addRole(string $role): void
-//    {
-//        $this->roles[] = $role;
-//    }
-//
-//    public function deleteRole(string $role): void
-//    {
-//        if (isset($this->roles[$role])) {
-//            unset($this->roles[$role]);
-//        }
-//    }
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
+        return $this;
     }
 
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function setPassword(string $password): User
+    {
+        $this->password = $password;
+        return $this;
     }
 }

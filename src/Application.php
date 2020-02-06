@@ -8,6 +8,7 @@ use App\Action\NotFoundAction;
 use Aura\Router\Generator;
 use Aura\Router\Map;
 use Aura\Router\RouterContainer;
+use Exception;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use Psr\Container\ContainerInterface;
@@ -86,7 +87,7 @@ final class Application implements MiddlewarePipeInterface
                 continue;
             }
 
-            throw new \Exception('Non valid middleware.');
+            throw new Exception('Non valid middleware.');
         }
     }
 
@@ -111,10 +112,10 @@ final class Application implements MiddlewarePipeInterface
         }
     }
 
-    private function checkMethod(string $method)
+    private function checkMethod(string $method): void
     {
         if (false === array_search($method, ['get', 'post'])) {
-            throw new \Exception('Method not found');
+            throw new Exception('Method not found');
         }
     }
 
@@ -144,7 +145,7 @@ final class Application implements MiddlewarePipeInterface
                 continue;
             }
 
-            throw new \Exception('Non valid service.');
+            throw new Exception('Non valid service.');
         }
     }
 

@@ -18,9 +18,13 @@ class UserService
 
     public function createUser(string $email, string $password): void
     {
-        $user = new User();
-        $user->setEmail($email);
-        $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+        if (!$hash = password_hash($password, PASSWORD_BCRYPT)) {
+            throw new \Exception();
+        }
+
+        $user = (new User())
+            ->setEmail($email)
+            ->setPassword($hash);
 
         $this->em->persist($user);
         $this->em->flush();

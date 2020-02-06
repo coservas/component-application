@@ -6,6 +6,6 @@ namespace App\Entity;
 
 interface UserInterface
 {
-    public function getEmail();
-    public function getPassword();
+    public function getEmail(): string;
+    public function getPassword(): string;
 }
