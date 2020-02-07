@@ -17,13 +17,13 @@
                     remember-me-text="{{ 'remember_me'|trans }}"
                     invalid-password-text="{{ 'small_password'|trans }}"
                     invalid-username-text="{{ 'invalid_username'|trans }}"
-                    check-login-url="{{ path('check-login') }}"
+                    check-login-url="{{ path('app.check-login') }}"
                 ></login-form>
             </div>
 
             <div class="card-footer bg-white p-0  ">
                 <div class="card-footer-item card-footer-item-bordered">
-                    <a href="{{ path('register') }}" class="footer-link">{{ 'create_account'|trans }}</a>
+                    <a href="{{ path('app.register') }}" class="footer-link">{{ 'create_account'|trans }}</a>
                 </div>
 
                 <div class="card-footer-item card-footer-item-bordered">
