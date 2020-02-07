@@ -7,6 +7,7 @@ namespace App;
 use App\Action\NotFoundAction;
 use Aura\Router\Generator;
 use Aura\Router\Map;
+use Aura\Router\Route;
 use Aura\Router\RouterContainer;
 use Exception;
 use League\Container\Container;
@@ -101,13 +102,28 @@ final class Application implements MiddlewarePipeInterface
 
             if (is_string($methods)) {
                 $this->checkMethod($methods);
+
+                /* @var Route $auraRoute */
+                $auraRoute = $map->$methods($route['name'], $route['path'], $route['handler']);
+                if (isset($route['tokens'])) {
+                    $auraRoute->tokens($route['tokens']);
+                }
+
+                continue;
             }
 
             if (is_array($methods)) {
                 foreach ($methods as $method) {
                     $this->checkMethod($method);
-                    $map->$method($route['name'], $route['path'], $route['handler']);
+
+                    /* @var Route $auraRoute */
+                    $auraRoute = $map->$method($route['name'], $route['path'], $route['handler']);
+                    if (isset($route['tokens'])) {
+                        $auraRoute->tokens($route['tokens']);
+                    }
                 }
+
+                continue;
             }
         }
     }
