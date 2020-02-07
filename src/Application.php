@@ -98,34 +98,52 @@ final class Application implements MiddlewarePipeInterface
 
         $map = $this->router->getMap();
         foreach ($routes as $route) {
-            $methods = $route['methods'];
+            if (isset($route['routes'])) {
+                $map->attach($route['name_prefix'] ?? '', $route['path_prefix'] ?? '', function (Map $map) use ($route) {
+                    if (isset($route['tokens'])) {
+                        $map->tokens($route['tokens']);
+                    }
 
-            if (is_string($methods)) {
-                $this->checkMethod($methods);
+                    if (isset($route['defaults'])) {
+                        $map->defaults($route['defaults']);
+                    }
 
-                /* @var Route $auraRoute */
-                $auraRoute = $map->$methods($route['name'], $route['path'], $route['handler']);
-                if (isset($route['tokens'])) {
-                    $auraRoute->tokens($route['tokens']);
-                }
+                    foreach ($route['routes'] as $r) {
+                        $map = $this->addRoute($map, $r);
+                    }
+                });
 
                 continue;
             }
 
-            if (is_array($methods)) {
-                foreach ($methods as $method) {
-                    $this->checkMethod($method);
+            $map = $this->addRoute($map, $route);
+        }
+    }
 
-                    /* @var Route $auraRoute */
-                    $auraRoute = $map->$method($route['name'], $route['path'], $route['handler']);
-                    if (isset($route['tokens'])) {
-                        $auraRoute->tokens($route['tokens']);
-                    }
-                }
+    private function addRoute(Map $map, array $route): Map
+    {
+        $methods = $route['methods'];
 
-                continue;
+        if (!is_array($methods)) {
+            throw new \Exception('Methods must be an array');
+        }
+
+        foreach ($methods as $method) {
+            $this->checkMethod($method);
+
+            /* @var Route $auraRoute */
+            $auraRoute = $map->$method($route['name'], $route['path'], $route['handler']);
+
+            if (isset($route['tokens'])) {
+                $auraRoute->tokens($route['tokens']);
+            }
+
+            if (isset($route['defaults'])) {
+                $auraRoute->tokens($route['defaults']);
             }
         }
+
+        return $map;
     }
 
     private function checkMethod(string $method): void
