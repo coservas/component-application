@@ -38,7 +38,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
             $isSecurityPath = !!(preg_match(sprintf("#%s#", $item['path']), $path));
             if ($isSecurityPath && !$user) {
                 return new RedirectResponse(
-                    (string) $this->generator->generate('login')
+                    (string) $this->generator->generate('app.login')
                 );
             }
         }

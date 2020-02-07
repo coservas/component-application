@@ -4,7 +4,7 @@ return [
     'security' => [
         'access_control' => [
             [
-                'path' => '^/admin.*$'
+                'path' => '^/.{2}/admin.*$'
             ],
         ],
     ]
