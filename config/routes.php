@@ -8,7 +8,6 @@ return [
         'handler' => App\Action\MainAction::class,
     ],
     [
-        'name_prefix' => 'app.',
         'path_prefix' => '/{lang}',
         'tokens' => ['lang' => '(ru|en)'],
         'defaults' => ['lang' => 'en'],

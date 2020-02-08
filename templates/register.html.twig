@@ -19,13 +19,13 @@
                     invalid-username-text="{{ 'invalid_username'|trans }}"
                     invalid-password-text="{{ 'small_password'|trans }}"
                     invalid-confirm-password-text="{{ 'invalid_confirm_password'|trans }}"
-                    check-register-url="{{ path('app.check-register') }}"
+                    check-register-url="{{ path('check-register') }}"
                 ></register-form>
             </div>
 
             <div class="card-footer bg-white p-0  ">
                 <div class="card-footer-item card-footer-item-bordered col-12">
-                    <a href="{{ path('app.login') }}" class="footer-link">{{ 'sign_in'|trans }}</a>
+                    <a href="{{ path('login') }}" class="footer-link">{{ 'sign_in'|trans }}</a>
                 </div>
             </div>
         </div>
