@@ -63,7 +63,7 @@ abstract class BaseAction
         return $this->authService->getUser();
     }
 
-    protected function trans(string $code, string $lang = TranslatorInterface::EN_LANG): string
+    protected function trans(string $code, string $lang = TranslatorInterface::EN): string
     {
         return $this->translator->translate($code, $lang);
     }
