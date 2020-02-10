@@ -37,7 +37,7 @@ return [
 
     MessagesLoaderInterface::class => PhpMessagesLoader::class,
     TranslatorInterface::class => fn(): TranslatorInterface
-        => (new TranslatorFactory())($this->container->get(MessagesLoaderInterface::class)),
+        => $this->container->get(TranslatorFactory::class)(),
 
     Environment::class => fn(): Environment
         => (new TwigExtension())($this->container),
