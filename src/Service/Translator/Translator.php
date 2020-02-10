@@ -7,12 +7,10 @@ namespace App\Service\Translator;
 class Translator implements TranslatorInterface
 {
     private const DEFAULT = null;
-    private const RU = 'ru';
-    private const EN = 'en';
 
     /** @var array<string, array> */
     private array $messages = [];
-    private string $defaultLanguage = self::EN;
+    private string $defaultLanguage = 'en';
 
     public function translate(string $code, ?string $lang = self::DEFAULT): string
     {
@@ -20,12 +18,12 @@ class Translator implements TranslatorInterface
             $lang = $this->defaultLanguage;
         }
 
-        return $this->messages[$code][$lang] ?? '';
+        return $this->messages[$lang][$code] ?? '';
     }
 
     public function addMessage(string $code, string $message, string $lang): Translator
     {
-        $this->messages[$code][$lang] = $message;
+        $this->messages[$lang][$code] = $message;
         return $this;
     }
 
@@ -36,10 +34,7 @@ class Translator implements TranslatorInterface
 
     private function getEnabledLanguages(): array
     {
-        return [
-            self::RU,
-            self::EN,
-        ];
+        return array_keys($this->messages);
     }
 
     public function setDefaultLanguage(string $lang): void
