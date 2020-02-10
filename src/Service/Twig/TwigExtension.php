@@ -15,10 +15,14 @@ final class TwigExtension
     private Environment $twig;
     private ContainerInterface $container;
 
-    public function __invoke(ContainerInterface $container): Environment
+    public function __invoke(): Environment
+    {
+        return $this->createEnvironment();
+    }
+
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        return $this->createEnvironment();
     }
 
     private function createEnvironment(): Environment
