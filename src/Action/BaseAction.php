@@ -35,7 +35,7 @@ abstract class BaseAction
 
     /**
      * @param string $name
-     * @param array<string, string|array> $context
+     * @param array<string, mixed> $context
      * @return HtmlResponse
      * @throws LoaderError
      * @throws SyntaxError
@@ -63,7 +63,7 @@ abstract class BaseAction
         return $this->authService->getUser();
     }
 
-    protected function trans(string $code, string $lang = TranslatorInterface::EN): string
+    protected function trans(string $code, ?string $lang = null): string
     {
         return $this->translator->translate($code, $lang);
     }

@@ -6,19 +6,24 @@ namespace App\Service\Translator;
 
 class Translator implements TranslatorInterface
 {
-    public const DEFAULT_LANGUAGE = self::EN;
+    private const DEFAULT = null;
     private const RU = 'ru';
     private const EN = 'en';
 
     /** @var array<string, array> */
     private array $messages = [];
+    private string $defaultLanguage = self::EN;
 
-    public function translate(string $code, string $lang = self::DEFAULT_LANGUAGE): string
+    public function translate(string $code, ?string $lang = self::DEFAULT): string
     {
+        if (!$lang) {
+            $lang = $this->defaultLanguage;
+        }
+
         return $this->messages[$code][$lang] ?? '';
     }
 
-    public function addMessage(string $code, string $message, string $lang = self::DEFAULT_LANGUAGE): Translator
+    public function addMessage(string $code, string $message, string $lang): Translator
     {
         $this->messages[$code][$lang] = $message;
         return $this;
@@ -35,5 +40,17 @@ class Translator implements TranslatorInterface
             self::RU,
             self::EN,
         ];
+    }
+
+    public function setDefaultLanguage(string $lang): void
+    {
+        if ($this->hasLanguage($lang)) {
+            $this->defaultLanguage = $lang;
+        }
+    }
+
+    public function getDefaultLanguage(): string
+    {
+        return $this->defaultLanguage;
     }
 }

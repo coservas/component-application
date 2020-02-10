@@ -8,8 +8,6 @@ use App\Service\Translator\TranslatorInterface;
 use App\Service\Twig\TwigExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use ContainerInteropDoctrine\EntityManagerFactory;
-use Middlewares\Utils\Factory\DiactorosFactory;
-use Psr\Http\Message\StreamFactoryInterface;
 use Twig\Environment;
 use Twig\Loader\LoaderInterface;
 use Twig\Loader\FilesystemLoader;

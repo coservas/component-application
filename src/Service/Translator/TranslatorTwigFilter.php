@@ -16,9 +16,6 @@ class TranslatorTwigFilter
 
     public function translate(string $code, ?string $lang = null): string
     {
-        return $lang
-            ? $this->translator->translate($code, $lang)
-            : $this->translator->translate($code)
-        ;
+        return $this->translator->translate($code, $lang);
     }
 }

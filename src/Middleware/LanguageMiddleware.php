@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Middleware;
 
 use App\Service\Translator\Translator;
+use App\Service\Translator\TranslatorInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,7 +17,7 @@ class LanguageMiddleware implements MiddlewareInterface
     private const COOKIE_KEY = 'LOCALE';
     private Translator $translator;
 
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -30,7 +32,7 @@ class LanguageMiddleware implements MiddlewareInterface
 
         $lang = $this->translator->hasLanguage($lang)
             ? $lang
-            : Translator::DEFAULT_LANGUAGE;
+            : $this->translator->getDefaultLanguage();
 
         if ($lang !== $langFromCookie) {
             $this->unsetCookie();

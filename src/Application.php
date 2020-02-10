@@ -68,30 +68,6 @@ final class Application implements MiddlewarePipeInterface
         $this->container->add('parameters', $parameters);
     }
 
-    private function addMiddlewares(): void
-    {
-        $middlewares = require 'config/middlewares.php';
-
-        foreach ($middlewares as $middleware) {
-            if (is_string($middleware)) {
-                $this->pipe($this->container->get($middleware));
-                continue;
-            }
-
-            if (is_object($middleware) && ($middleware instanceof MiddlewareInterface)) {
-                $this->pipe($middleware);
-                continue;
-            }
-
-            if (is_array($middleware)) {
-                $this->pipe(new $middleware['class'](...$middleware['args']));
-                continue;
-            }
-
-            throw new Exception('Non valid middleware.');
-        }
-    }
-
     private function addRoutes(): void
     {
         $routes = require 'config/routes.php';
@@ -180,6 +156,30 @@ final class Application implements MiddlewarePipeInterface
             }
 
             throw new Exception('Non valid service.');
+        }
+    }
+
+    private function addMiddlewares(): void
+    {
+        $middlewares = require 'config/middlewares.php';
+
+        foreach ($middlewares as $middleware) {
+            if (is_string($middleware)) {
+                $this->pipe($this->container->get($middleware));
+                continue;
+            }
+
+            if (is_object($middleware) && ($middleware instanceof MiddlewareInterface)) {
+                $this->pipe($middleware);
+                continue;
+            }
+
+            if (is_array($middleware)) {
+                $this->pipe(new $middleware['class'](...$middleware['args']));
+                continue;
+            }
+
+            throw new Exception('Non valid middleware.');
         }
     }
 
