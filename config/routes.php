@@ -1,5 +1,12 @@
 <?php
 
+use App\Service\Translator\TranslatorInterface;
+
+/** @var TranslatorInterface $translator */
+$translator = $this->container->get(TranslatorInterface::class);
+$defaultLanguage = $translator->getDefaultLanguage();
+$enabledLanguages = $translator->getEnabledLanguages();
+
 return [
     [
         'methods' => ['get'],
@@ -9,8 +16,8 @@ return [
     ],
     [
         'path_prefix' => '/{lang}',
-        'tokens' => ['lang' => '(ru|en)'],
-        'defaults' => ['lang' => 'en'],
+        'tokens' => ['lang' => sprintf('(%s)', implode('|', $enabledLanguages))],
+        'defaults' => ['lang' => $defaultLanguage],
         'routes' => require 'routes/language-dependent-routes.php',
     ],
     ... require 'routes/main_redirects.php'

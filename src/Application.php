@@ -33,10 +33,10 @@ final class Application implements MiddlewarePipeInterface
         $this->setMiddleware();
 
         $this->addParams();
-        $this->addRoutes();
         $this->addConfigs();
         $this->addServices();
         $this->addMiddlewares();
+        $this->addRoutes();
     }
 
     private function setRouter(): void
@@ -66,34 +66,6 @@ final class Application implements MiddlewarePipeInterface
     {
         $parameters = require 'config/parameters.php';
         $this->container->add('parameters', $parameters);
-    }
-
-    private function addRoutes(): void
-    {
-        $routes = require 'config/routes.php';
-
-        $map = $this->router->getMap();
-        foreach ($routes as $route) {
-            if (isset($route['routes'])) {
-                $map->attach($route['name_prefix'] ?? '', $route['path_prefix'] ?? '', function (Map $map) use ($route) {
-                    if (isset($route['tokens'])) {
-                        $map->tokens($route['tokens']);
-                    }
-
-                    if (isset($route['defaults'])) {
-                        $map->defaults($route['defaults']);
-                    }
-
-                    foreach ($route['routes'] as $r) {
-                        $map = $this->addRoute($map, $r);
-                    }
-                });
-
-                continue;
-            }
-
-            $map = $this->addRoute($map, $route);
-        }
     }
 
     private function addRoute(Map $map, array $route): Map
@@ -180,6 +152,34 @@ final class Application implements MiddlewarePipeInterface
             }
 
             throw new Exception('Non valid middleware.');
+        }
+    }
+
+    private function addRoutes(): void
+    {
+        $routes = require 'config/routes.php';
+
+        $map = $this->router->getMap();
+        foreach ($routes as $route) {
+            if (isset($route['routes'])) {
+                $map->attach($route['name_prefix'] ?? '', $route['path_prefix'] ?? '', function (Map $map) use ($route) {
+                    if (isset($route['tokens'])) {
+                        $map->tokens($route['tokens']);
+                    }
+
+                    if (isset($route['defaults'])) {
+                        $map->defaults($route['defaults']);
+                    }
+
+                    foreach ($route['routes'] as $r) {
+                        $map = $this->addRoute($map, $r);
+                    }
+                });
+
+                continue;
+            }
+
+            $map = $this->addRoute($map, $route);
         }
     }
 
