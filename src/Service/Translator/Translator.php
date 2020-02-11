@@ -32,7 +32,7 @@ class Translator implements TranslatorInterface
         return in_array($lang, $this->getEnabledLanguages(), true);
     }
 
-    private function getEnabledLanguages(): array
+    public function getEnabledLanguages(): array
     {
         return array_keys($this->messages);
     }

@@ -8,4 +8,7 @@ interface TranslatorInterface
     public function addMessage(string $code, string $message, string $lang): TranslatorInterface;
     public function getDefaultLanguage(): string;
     public function hasLanguage(string $lang): bool;
+
+    /** @return string[] */
+    public function getEnabledLanguages(): array;
 }
