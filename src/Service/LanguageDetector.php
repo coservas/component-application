@@ -31,6 +31,24 @@ class LanguageDetector
         );
     }
 
+    public function getLanguageFromUri(): string
+    {
+        $matches = [];
+        $uri = $this->request->getUri()->getPath();
+
+        if (preg_match('#^\/(?<lang>.{2})\/.*#', $uri, $matches)) {
+            return $matches['lang'];
+        }
+
+        return '';
+    }
+
+    public function resetLanguageCookie(string $lang): void
+    {
+        $this->unsetLanguageCookie();
+        $this->setLanguageCookie($lang);
+    }
+
     public function setLanguageCookie(string $lang): void
     {
         setcookie(self::COOKIE_KEY, $lang, [

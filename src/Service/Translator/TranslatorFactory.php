@@ -43,7 +43,16 @@ class TranslatorFactory
 
     private function getDefaultLanguage(): string
     {
+        $langFromUri = $this->detector->getLanguageFromUri();
         $langFromCookie = $this->detector->getLanguageFromCookie();
+
+        if ($this->translator->hasLanguage($langFromUri)) {
+            if ($langFromUri !== $langFromCookie) {
+                $this->detector->resetLanguageCookie($langFromUri);
+            }
+
+            return $langFromUri;
+        }
 
         $lang = $this->translator->hasLanguage($langFromCookie)
             ? $langFromCookie
@@ -54,8 +63,7 @@ class TranslatorFactory
             : $this->translator->getDefaultLanguage();
 
         if ($lang !== $langFromCookie) {
-            $this->detector->unsetLanguageCookie();
-            $this->detector->setLanguageCookie($lang);
+            $this->detector->resetLanguageCookie($lang);
         }
 
         return $lang;
