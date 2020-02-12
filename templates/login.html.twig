@@ -2,6 +2,14 @@
 
 {% block content %}
     <div class="splash-container">
+        <div class="input-group-append be-addon">
+            <button id="change-language-button" type="button" data-toggle="dropdown" class="btn btn-light dropdown-toggle" aria-expanded="false">EN</button>
+            <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(1162px, -153px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a href="{{ path('login', {'lang': 'ru'}) }}" class="dropdown-item">Русский</a>
+                <a href="{{ path('login', {'lang': 'en'}) }}" class="dropdown-item">English</a>
+            </div>
+        </div>
+
         <div class="card ">
             <div class="card-header text-center">
                 <img class="logo-img" src="../assets/images/logo.png" alt="logo">
@@ -60,6 +68,13 @@
             align-items: center;
             padding-top: 40px;
             padding-bottom: 40px;
+        }
+
+        #change-language-button {
+            position: absolute;
+            margin: 1px;
+            background-color: #FFF;
+            border: none;
         }
     </style>
 {% endblock %}
