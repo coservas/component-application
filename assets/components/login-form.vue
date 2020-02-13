@@ -87,7 +87,7 @@
                     const response = await axios.post(this.checkLoginUrl, {
                         username: this.username,
                         password: this.password
-                    });
+                    })
 
                     this.clearError()
 
@@ -101,10 +101,10 @@
                         return
                     }
 
-                    window.location.href = response.data.url;
+                    window.location.href = response.data.url
                 } catch (error) {
                     this.setError()
-                    console.log(error);
+                    console.log(error)
                 }
             },
 

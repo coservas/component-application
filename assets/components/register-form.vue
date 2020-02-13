@@ -92,7 +92,7 @@
                         username: this.username,
                         password: this.password,
                         confirm_password: this.confirmPassword
-                    });
+                    })
 
                     this.clearError()
 
@@ -106,10 +106,10 @@
                         return
                     }
 
-                    window.location.href = response.data.url;
+                    window.location.href = response.data.url
                 } catch (error) {
                     this.setError()
-                    console.log(error);
+                    console.log(error)
                 }
             },
 
