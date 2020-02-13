@@ -9,12 +9,6 @@ $enabledLanguages = $translator->getEnabledLanguages();
 
 return [
     [
-        'methods' => ['get'],
-        'name' => 'main',
-        'path' => '/',
-        'handler' => App\Action\MainAction::class,
-    ],
-    [
         'path_prefix' => '/{lang}',
         'tokens' => ['lang' => sprintf('(%s)', implode('|', $enabledLanguages))],
         'defaults' => ['lang' => $defaultLanguage],

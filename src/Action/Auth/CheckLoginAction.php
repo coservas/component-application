@@ -34,7 +34,8 @@ class CheckLoginAction extends BaseAction implements RequestHandlerInterface
 
             return $this->jsonResponse([
                 'status' => 'success',
-                'message' => 'User found'
+                'message' => 'User found',
+                'url' => $this->generator->generate('profile'),
             ]);
         } catch (\Exception $e) {
             return $this->jsonResponse([

@@ -3,6 +3,12 @@
 return [
     [
         'methods' => ['get'],
+        'name' => 'profile',
+        'path' => '/profile',
+        'handler' => App\Action\ProfileAction::class,
+    ],
+    [
+        'methods' => ['get'],
         'name' => 'login',
         'path' => '/login',
         'handler' => App\Action\Auth\LoginAction::class,
