@@ -36,10 +36,12 @@ abstract class BaseAction
     /**
      * @param string $name
      * @param array<string, mixed> $context
-     * @return HtmlResponse
+     *
      * @throws LoaderError
      * @throws SyntaxError
      * @throws RuntimeError
+     *
+     * @return HtmlResponse
      */
     protected function render(string $name, array $context = []): HtmlResponse
     {
@@ -51,6 +53,7 @@ abstract class BaseAction
     /**
      * @param array<mixed> $data
      * @param int $status
+     *
      * @return JsonResponse
      */
     protected function jsonResponse(array $data, int $status = 200): JsonResponse

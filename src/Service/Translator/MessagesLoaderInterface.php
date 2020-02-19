@@ -8,6 +8,7 @@ interface MessagesLoaderInterface
 {
     /**
      * Return ['lang' => [ 'code' => 'message', 'code1' => 'message1' ]]
+     *
      * @return array<string, array>
      */
     public function load(): array;

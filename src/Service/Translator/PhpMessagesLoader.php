@@ -33,8 +33,9 @@ class PhpMessagesLoader implements MessagesLoaderInterface
     }
 
     /**
-     * @return array<int,string>
      * @throws \Exception
+     *
+     * @return array<int,string>
      */
     private function getFileNames(): array
     {

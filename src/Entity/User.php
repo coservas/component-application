@@ -31,6 +31,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="array")
+     *
      * @var string[]
      */
     private array $roles = [];
@@ -48,6 +49,7 @@ class User implements UserInterface
     public function setEmail(string $email): User
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -59,6 +61,7 @@ class User implements UserInterface
     public function setPassword(string $password): User
     {
         $this->password = $password;
+
         return $this;
     }
 }

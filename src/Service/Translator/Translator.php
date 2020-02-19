@@ -24,6 +24,7 @@ class Translator implements TranslatorInterface
     public function addMessage(string $code, string $message, string $lang): Translator
     {
         $this->messages[$lang][$code] = $message;
+
         return $this;
     }
 

@@ -32,13 +32,13 @@ return [
     AdapterInterface::class => AuthenticationAdapter::class,
     AuthenticationService::class => AuthenticationService::class,
 
-    EntityManagerInterface::class => fn(): EntityManagerInterface
+    EntityManagerInterface::class => fn (): EntityManagerInterface
         => $this->container->get(EntityManagerFactory::class)($this->container),
 
     MessagesLoaderInterface::class => PhpMessagesLoader::class,
-    TranslatorInterface::class => fn(): TranslatorInterface
+    TranslatorInterface::class => fn (): TranslatorInterface
         => $this->container->get(TranslatorFactory::class)(),
 
-    Environment::class => fn(): Environment
+    Environment::class => fn (): Environment
         => $this->container->get(TwigExtension::class)(),
 ];

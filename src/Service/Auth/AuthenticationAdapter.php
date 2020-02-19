@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Auth;
 
 use App\Entity\User;
-use App\Entity\UserInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Zend\Authentication\Result;

@@ -162,7 +162,10 @@ final class Application implements MiddlewarePipeInterface
         $map = $this->router->getMap();
         foreach ($routes as $route) {
             if (isset($route['routes'])) {
-                $map->attach($route['name_prefix'] ?? '', $route['path_prefix'] ?? '', function (Map $map) use ($route) {
+                $namePref = $route['name_prefix'] ?? '';
+                $pathPref = $route['path_prefix'] ?? '';
+
+                $map->attach($namePref, $pathPref, function (Map $map) use ($route) {
                     if (isset($route['tokens'])) {
                         $map->tokens($route['tokens']);
                     }
