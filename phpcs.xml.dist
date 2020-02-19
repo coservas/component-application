@@ -4,6 +4,7 @@
 
     <!-- display progress -->
     <arg value="p"/>
+    <arg name="cache" value=".phpcs-cache"/>
     <arg name="colors"/>
 
     <!-- inherit rules from: -->

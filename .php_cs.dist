@@ -1,7 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude(['.mk-lib', 'assets', 'node_modules', 'public', 'vendor'])
+    ->exclude(['.mk-lib', 'assets', 'node_modules', 'public', 'vendor', 'src/Migrations'])
     ->notPath('*')
     ->in(__DIR__);
 

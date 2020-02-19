@@ -6,3 +6,4 @@ vendor/
 node_modules/
 public/build/
 .php_cs.cache
+.phpcs-cache
