@@ -1,7 +1,8 @@
-.idea
+.idea/
 .env.local
 .phpunit.result.cache
 phpunit.xml
-vendor
-node_modules
-public/build
+vendor/
+node_modules/
+public/build/
+.php_cs.cache

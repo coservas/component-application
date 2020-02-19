@@ -39,6 +39,7 @@
         "zendframework/zend-stratigility": "^3.2"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
         "phpmd/phpmd": "^2.7",
         "phpstan/phpstan": "^0.12.0",
         "phpunit/phpunit": "^8.4",
@@ -46,13 +47,18 @@
     },
     "scripts": {
         "test": "phpunit --colors=always",
-        "phpcs": "./vendor/bin/phpcs",
-        "phpmd": "./vendor/bin/phpmd ./src/,./config/,./public/index.php text cleancode,codesize,controversial,design,naming,unusedcode",
-        "phpstan": "./vendor/bin/phpstan analyse --paths-file=./phpstan.dist --ansi --level=max",
         "analyse": [
             "@phpcs",
             "@phpstan"
         ],
-        "fix": "./vendor/bin/phpcbf"
+        "fix": [
+            "@phpcbf",
+            "@php-cs-fixer"
+        ],
+        "phpcs": "./vendor/bin/phpcs",
+        "phpcbf": "./vendor/bin/phpcbf",
+        "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=dots",
+        "phpmd": "./vendor/bin/phpmd ./src/,./tests/,./config/,./public/index.php text cleancode,codesize,controversial,design,naming,unusedcode",
+        "phpstan": "./vendor/bin/phpstan analyse --paths-file=./phpstan.dist --ansi --level=max"
     }
 }
