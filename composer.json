@@ -68,10 +68,6 @@
         "hooks": {
             "pre-commit": [
                 "composer phpcs"
-            ],
-            "pre-push": [
-                "composer fix -q",
-                "composer test -q"
             ]
         }
     }
