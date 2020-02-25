@@ -68,6 +68,14 @@ final class Application implements MiddlewarePipeInterface
         $this->container->add('parameters', $parameters);
     }
 
+    /**
+     * @param Map<Route> $map
+     * @param array<string, array> $route
+     *
+     * @throws Exception
+     *
+     * @return Map<Route>
+     */
     private function addRoute(Map $map, array $route): Map
     {
         $methods = $route['methods'];

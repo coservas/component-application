@@ -42,6 +42,9 @@ class TranslatorTwigFilterTest extends TestCase
         return new TranslatorTwigFilter($translator);
     }
 
+    /**
+     * @return array<string, array>
+     */
     private function getMessages(): array
     {
         return [

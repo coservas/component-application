@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use Zend\Diactoros\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
 
 class LanguageDetector
 {
     private const COOKIE_KEY = 'LOCALE';
-    private ServerRequest $request;
+    private ServerRequestInterface $request;
 
     public function __construct()
     {

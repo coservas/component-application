@@ -58,6 +58,9 @@ class TranslatorTest extends TestCase
         return $translator;
     }
 
+    /**
+     * @return array<string, array>
+     */
     private function getMessages(): array
     {
         return [

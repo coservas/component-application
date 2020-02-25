@@ -14,11 +14,7 @@ class Translator implements TranslatorInterface
 
     public function translate(string $code, ?string $lang = self::DEFAULT): string
     {
-        if (!$lang) {
-            $lang = $this->defaultLanguage;
-        }
-
-        return $this->messages[$lang][$code] ?? '';
+        return $this->messages[$lang ?? $this->defaultLanguage][$code] ?? '';
     }
 
     public function addMessage(string $code, string $message, string $lang): Translator
