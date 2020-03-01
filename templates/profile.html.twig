@@ -1,1 +1,59 @@
-Profile {{ username }}
+{% extends 'main.html.twig' %}
+
+{% block title %}
+    {{ 'profile'|trans }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{ 'personal_data'|trans }}</h5>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputEmail">{{ 'username'|trans }}</label>
+                        <input id="inputEmail" type="email" name="email" data-parsley-trigger="change" required="" placeholder="{{ 'username'|trans }}" autocomplete="off" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPassword">{{ 'password'|trans }}</label>
+                        <input id="inputPassword" type="password" placeholder="{{ 'password'|trans }}" required="" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputSname">{{ 'sname'|trans }}</label>
+                        <input id="inputSname" data-parsley-trigger="change" required="" placeholder="{{ 'sname'|trans }}" autocomplete="off" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputFname">{{ 'fname'|trans }}</label>
+                        <input id="inputFname" data-parsley-trigger="change" required="" placeholder="{{ 'fname'|trans }}" autocomplete="off" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputMname">{{ 'mname'|trans }}</label>
+                        <input id="inputMname" data-parsley-trigger="change" required="" placeholder="{{ 'mname'|trans }}" autocomplete="off" class="form-control">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 pb-2 pb-sm-4 pb-lg-0 pr-0">
+                            <button type="submit" class="btn btn-space btn-primary">{{ 'save'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <img class="card-img-top img-fluid" src="../assets/images/card-img.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <a href="#" class="btn btn-primary">{{ 'change'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

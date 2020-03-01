@@ -9,11 +9,40 @@
 </head>
 
 <body>
-{% block content %}
+{% block body %}
     <div class="dashboard-main-wrapper">
         {% include 'common/header.html.twig' %}
         {% include 'common/left_sidebar.html.twig' %}
-        {% include 'common/dashboard.html.twig' %}
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content ">
+
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-header">
+                                <h2 class="pageheader-title">{% block title %}E-commerce Dashboard Template{% endblock %}</h2>
+{#                                <div class="page-breadcrumb">#}
+{#                                    <nav aria-label="breadcrumb">#}
+{#                                        <ol class="breadcrumb">#}
+{#                                            {% block breadcrumb %}#}
+{#                                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>#}
+{#                                                <li class="breadcrumb-item active" aria-current="page">E-Commerce Dashboard Template</li>#}
+{#                                            {% endblock %}#}
+{#                                        </ol>#}
+{#                                    </nav>#}
+{#                                </div>#}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            {% include 'common/footer.html.twig' %}
+        </div>
     </div>
 {% endblock %}
 
