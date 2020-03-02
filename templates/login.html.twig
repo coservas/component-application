@@ -3,10 +3,20 @@
 {% block body %}
     <div class="splash-container">
         <div class="input-group-append be-addon">
-            <button id="change-language-button" type="button" data-toggle="dropdown" class="btn btn-light dropdown-toggle" aria-expanded="false">EN</button>
+            <button id="change-language-button" type="button" data-toggle="dropdown" class="btn btn-light" aria-expanded="false">
+                {% if (lang == 'ru') %}
+                    <i class="flag-icon flag-icon-ru" title="ru"></i>
+                {% else %}
+                    <i class="flag-icon flag-icon-us" title="us"></i>
+                {% endif %}
+            </button>
+
             <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(1162px, -153px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <a href="{{ path('login', {'lang': 'ru'}) }}" class="dropdown-item">Русский</a>
-                <a href="{{ path('login', {'lang': 'en'}) }}" class="dropdown-item">English</a>
+                {% if (lang == 'ru') %}
+                    <a href="{{ path('login', {'lang': 'en'}) }}" class="dropdown-item"><i class="flag-icon flag-icon-us" title="us"></i>English</a>
+                {% else %}
+                    <a href="{{ path('login', {'lang': 'ru'}) }}" class="dropdown-item"><i class="flag-icon flag-icon-ru" title="ru"></i>Русский</a>
+                {% endif %}
             </div>
         </div>
 

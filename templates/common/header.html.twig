@@ -8,9 +8,29 @@
             <ul class="navbar-nav ml-auto navbar-right-top">
 
                 <li class="nav-item dropdown nav-user">
-                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
-                    <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if (lang == 'ru') %}
+                            <i class="flag-icon flag-icon-ru" title="ru"></i>
+                        {% else %}
+                            <i class="flag-icon flag-icon-us" title="us"></i>
+                        {% endif %}
+                    </a>
 
+                    <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                        {% if (lang == 'ru') %}
+                            <a class="dropdown-item" href="{{ path('profile', {'lang': 'en'}) }}"><i class="flag-icon flag-icon-us" title="us"></i>English</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ path('profile', {'lang': 'ru'}) }}"><i class="flag-icon flag-icon-ru" title="ru"></i>Русский</a>
+                        {% endif %}
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown nav-user">
+                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="https://randomuser.me/api/portraits/lego/2.jpg" alt="" class="user-avatar-md rounded-circle">
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                         <div class="nav-user-info">
                             <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
                         </div>
