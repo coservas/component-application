@@ -7,7 +7,6 @@ namespace App\Service\Auth;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectRepository;
 use Zend\Authentication\Result;
 use Zend\Authentication\Adapter\AdapterInterface;
 
