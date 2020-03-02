@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Twig;
 
+use App\Service\Translator\TranslatorInterface;
 use App\Service\Translator\TranslatorTwigFilter;
 use Aura\Router\Generator;
 use Psr\Container\ContainerInterface;
@@ -30,6 +31,7 @@ final class TwigExtension
         $this->twig = new Environment($this->container->get(LoaderInterface::class));
         $this->twig->addRuntimeLoader($this->container->get(ContainerLoader::class));
 
+        $this->addGlobals();
         $this->addFilters();
         $this->addFunctions();
 
@@ -53,6 +55,14 @@ final class TwigExtension
                 'path',
                 [Generator::class, 'generate'],
             )
+        );
+    }
+
+    private function addGlobals(): void
+    {
+        $this->twig->addGlobal(
+            'lang',
+            $this->container->get(TranslatorInterface::class)->getDefaultLanguage(),
         );
     }
 }
