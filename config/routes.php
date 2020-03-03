@@ -14,5 +14,5 @@ return [
         'defaults' => ['lang' => $defaultLanguage],
         'routes' => require 'routes/language-dependent-routes.php',
     ],
-    ... require 'routes/main_redirects.php'
+    ... require 'routes/main-redirects.php'
 ];

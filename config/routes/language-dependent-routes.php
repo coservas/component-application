@@ -1,12 +1,7 @@
 <?php
 
 return [
-    [
-        'methods' => ['get'],
-        'name' => 'profile',
-        'path' => '/profile',
-        'handler' => App\Action\ProfileAction::class,
-    ],
+    ... require 'profile/profile.php',
     [
         'methods' => ['get'],
         'name' => 'login',
