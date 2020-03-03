@@ -32,17 +32,17 @@ class User implements UserInterface
     /**
      * @ORM\Column(length=255, nullable=true)
      */
-    private string $fname;
+    private ?string $fname;
 
     /**
      * @ORM\Column(length=255, nullable=true)
      */
-    private string $sname;
+    private ?string $sname;
 
     /**
      * @ORM\Column(length=255, nullable=true)
      */
-    private string $mname;
+    private ?string $mname;
 
     public function getId(): int
     {
@@ -73,19 +73,11 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFname(): string
+    public function getFname(): ?string
     {
         return $this->fname;
     }
 
-    /**
-     * @param string $fname
-     *
-     * @return User
-     */
     public function setFname(string $fname): User
     {
         $this->fname = $fname;
@@ -93,19 +85,11 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSname(): string
+    public function getSname(): ?string
     {
         return $this->sname;
     }
 
-    /**
-     * @param string $sname
-     *
-     * @return User
-     */
     public function setSname(string $sname): User
     {
         $this->sname = $sname;
@@ -113,19 +97,11 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMname(): string
+    public function getMname(): ?string
     {
         return $this->mname;
     }
 
-    /**
-     * @param string $mname
-     *
-     * @return User
-     */
     public function setMname(string $mname): User
     {
         $this->mname = $mname;
