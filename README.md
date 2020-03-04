@@ -1,6 +1,6 @@
 Installing
 ```
-git clone project && cd project
+git clone git@github.com:coservas/component-application.git && cd component-application
 make install
 ```
 
