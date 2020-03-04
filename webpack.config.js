@@ -1,26 +1,22 @@
-let Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore')
+const CopyPlugin = require('copy-webpack-plugin')
+
+const staticPaths = [
+    { from: './assets/template/images',  to: 'template/images' },
+    { from: './assets/template/libs', to: 'template/libs' },
+    { from: './assets/template/vendor', to: 'template/vendor' },
+]
 
 Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('app', './assets/app.js')
-
-    // will require an extra script tag for runtime.js
-    // but, you probably want this, unless you're building a single-page app
-    // .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
+    .disableSingleRuntimeChunk()
+    .enableSassLoader()
+    .enableVueLoader()
+    .addPlugin(new CopyPlugin(staticPaths))
     // .enableVersioning(Encore.isProduction())
 
-// uncomment if you use TypeScript
-//.enableTypeScriptLoader()
-
-    // uncomment if you use Sass/SCSS files
-    // .enableSassLoader()
-
-// uncomment if you're having problems with a jQuery plugin
-// .autoProvidejQuery()
-    .enableVueLoader()
-;
-
-module.exports = Encore.getWebpackConfig();
+module.exports = Encore.getWebpackConfig()
