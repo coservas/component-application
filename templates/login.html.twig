@@ -22,12 +22,12 @@
 
         <div class="card ">
             <div class="card-header text-center">
-                <img class="logo-img" src="../assets/images/logo.png" alt="logo">
+                <img class="logo-img" src="/build/template/images/logo.png" alt="logo">
                 <span class="splash-description">{{ 'enter_you_email_and_password'|trans }}</span>
             </div>
 
             <div class="card-body">
-                <login-form
+                <login
                     id="login-form"
                     sign-in-text="{{ 'sign_in'|trans }}"
                     username-text="{{ 'username'|trans }}"
@@ -36,7 +36,7 @@
                     invalid-password-text="{{ 'small_password'|trans }}"
                     invalid-username-text="{{ 'invalid_username'|trans }}"
                     check-login-url="{{ path('check-login') }}"
-                ></login-form>
+                ></login>
             </div>
 
             <div class="card-footer bg-white p-0  ">

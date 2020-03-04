@@ -4,12 +4,12 @@
     <div class="splash-container">
         <div class="card ">
             <div class="card-header text-center">
-                <img class="logo-img" src="../assets/images/logo.png" alt="logo">
+                <img class="logo-img" src="/build/template/images/logo.png" alt="logo">
                 <span class="splash-description">{{ 'enter_you_email_and_password'|trans }}</span>
             </div>
 
             <div class="card-body">
-                <register-form
+                <register
                     id="register-form"
                     register-text="{{ 'register'|trans }}"
                     username-text="{{ 'username'|trans }}"
@@ -20,7 +20,7 @@
                     invalid-password-text="{{ 'small_password'|trans }}"
                     invalid-confirm-password-text="{{ 'invalid_confirm_password'|trans }}"
                     check-register-url="{{ path('check-register') }}"
-                ></register-form>
+                ></register>
             </div>
 
             <div class="card-footer bg-white p-0  ">

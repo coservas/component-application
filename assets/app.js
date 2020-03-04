@@ -1,11 +1,13 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import axios from 'axios'
-import LoginForm from './components/login-form'
-import RegisterForm from './components/register-form'
+import Login from './components/login'
+import Register from './components/register'
+import Profile from './components/profile/profile'
 
 global.Vue = Vue
 global.axios = axios
 
-Vue.component('LoginForm', LoginForm)
-Vue.component('RegisterForm', RegisterForm)
+Vue.component('Login', Login)
+Vue.component('Register', Register)
+Vue.component('Profile', Profile)
